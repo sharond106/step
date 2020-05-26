@@ -1,9 +1,48 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+#intro {
+  padding: 50px;
+  margin: 50px;
 }
 
-#greeting-container {
+h1 {
+  font-size: 60px;
+}
+
+p {
+  font-size: 20px;
+}
+
+#fact-container {
   margin-top: 20px;
+}
+
+body {
+  background-color: lavender;
+}
+
+img {
+  width: 500px;
+}
+
+#images {
+  padding: 100px;
+}
+
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+}
+
+/* Style the topnav links */
+.topnav a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 24px 26px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  color: purple;
 }
