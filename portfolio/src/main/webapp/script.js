@@ -26,3 +26,26 @@ function addRandomFact() {
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = fact;
 }
+
+// Scroll to the top of the document
+function topFunction() {
+  document.documentElement.scrollTop = 0; 
+}
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+window.onhashchange = function() {scrollFunction()};
+
+function scrollFunction() {
+  button = document.getElementById("to-top-btn");
+  if (window.pageYOffset > 20) {
+    button.style.display = "block";
+  } else {
+    button.style.display = "none";
+  }
+}
+
+function newPage() {
+  button = document.getElementById("to-top-btn");
+  button.style.display = "none";
+}

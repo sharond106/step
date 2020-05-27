@@ -5,8 +5,8 @@ html {
 }
 
 body {
-  height: 100%;
   font-family: 'Work Sans';
+  height: 100%;
   margin: 0;
 }
 
@@ -21,23 +21,22 @@ body {
 
 #trans-text{
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  border: 3px solid lavender;
   color: lavender;
   font-weight: bold;
-  border: 3px solid lavender;
-  position: absolute;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  width: 70%;
   padding: 20px;
+  position: absolute;
   text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  z-index: 2;
 }
 
 #about-me {
   background-color: lavender;
-  margin: 50px;
-  padding: 30px 90px;
+  padding: 80px 130px;
 }
 
 #intro {
@@ -83,10 +82,6 @@ th {
   margin-top: 20px;
 }
 
-body {
-  background-color: lavender;
-}
-
 img {
   max-height:100%;
   max-width:100%;
@@ -98,6 +93,7 @@ img {
 
 /* Style the top navigation bar */
 .topnav {
+  background-color: lavender;
   overflow: hidden;
   padding: 16px;
 }
@@ -125,5 +121,25 @@ img {
 
 /* Change color on hover */
 .topnav a:hover {
-  color: purple;
+  color: #8e8ead;
+}
+
+/* Go to top button */
+#to-top-btn {
+  background-color: #cec6e3;
+  border: none;
+  border-radius: 10px; /* Round corners */
+  bottom: 50px;
+  color: black;
+  cursor: pointer; /* Add mouse pointer on hover */
+  outline:none;
+  padding: 15px 15px 5px;
+  position: fixed;
+  right: 50px;
+  font-size: 20px;
+  z-index: 99; /* Won't overlap */
+}
+
+#to-top-btn:hover {
+    background-color: #8e8ead;
 }
