@@ -37,6 +37,7 @@ body {
 #about-me {
   background-color: lavender;
   height: 100%;
+  overflow: scroll;
   padding: 80px 130px;
 }
 
@@ -46,9 +47,8 @@ body {
   padding: 8px;
 }
 
-#intro {
-  margin: 50px;
-  padding: 30px 90px;
+#projects-pad {
+  padding: 80px 140px;
 }
 
 .right {
@@ -80,14 +80,14 @@ table {
 
 td, 
 th {
-  border: 2px solid #000;
+  border: 2px solid black;
   padding: 8px;
   text-align: left;
 }
 
 img {
-  max-height:100%;
-  max-width:100%;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 #images {
@@ -136,13 +136,19 @@ img {
   color: black;
   cursor: pointer; /* Add mouse pointer on hover */
   outline:none;
-  padding: 15px 15px 5px;
+  padding: 10px 17px 0px;
   position: fixed;
   right: 50px;
-  font-size: 20px;
+  font-size: 25px;
   z-index: 99; /* Won't overlap */
 }
 
 #to-top-btn:hover {
     background-color: #8e8ead;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #8e8ead;
 }

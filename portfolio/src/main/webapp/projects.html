@@ -5,6 +5,7 @@
     <title>Projects</title>
     <link rel="stylesheet" href="style.css">
     <link href='https://fonts.googleapis.com/css?family=Work Sans' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="script.js"></script>
   </head>
   <div class="topnav">
@@ -16,13 +17,42 @@
     <a href="index.html#about-me">About</a>
   </div>
   <body>
-    <div id="intro">
-      <h1>My projects.</h1>
-      <br>
+    <div id="projects-pad">
+    <h1>My projects.</h1>
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="card-deck">
+          <div class="card" >
+            <img class="card-img-top" src="images/poem.png" alt="Screenshot of poem" style="width:100%">
+            <div class="card-body">
+              <h4 class="card-title">Poetry Generator</h4>
+              <a href="#poetry" class="stretched-link"></a>
+            </div>
+          </div>
+          <div class="card" >
+            <img class="card-img-top" src="images/caterpillar.png" alt="Screenshot of shader">
+            <div class="card-body">
+              <h4 class="card-title">ShaderToy Render</h4>
+              <a href="#shader" class="stretched-link"></a>
+            </div>
+          </div>
+          <div class="card">
+            <img class="card-img-top" src="images/cornelldirect.png" alt="Card image" style="width:100%">
+            <div class="card-body">
+              <h4 class="card-title">Monte Carlo Path Tracer</h4>
+              <a href="#path-tracer" class="stretched-link"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <div id="poetry">
       <h2>Poetry Generator (Group Project)</h2>
-      <p>A neural network trained to generate poetry by fine-tuning <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">GPT-2</a> on a large dataset of poems.
-        Poems can be modified with various inputs, including sampling temperature, title, syllables and characters per line, number of words, number of poems, sentiment, alliteration, and rhyme scheme.
-        Also used <a href="https://arxiv.org/pdf/1810.04805.pdf>">BERT</a> masking to implement many of the modifiable features.
+      <p>Python<br>A neural network trained to generate poetry by fine-tuning <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">GPT-2</a> on a large dataset of poems.
+        Poems can be modified with various inputs, including sampling temperature, title, syllables and characters per line, number of words, number of poems, sentiment, alliteration, and rhyme scheme. While working with 2 others,
+        I was responsible for implementing the sentiment and alliteration modifications. We also used <a href="https://arxiv.org/pdf/1810.04805.pdf>">BERT</a> masking to implement many of the features.
         <br>
         Some generations:
       </p>
@@ -104,18 +134,47 @@
             <br>to leave for the day that you would be gone.
             <br>...
       </table>
-      <br>
+    </div>
+    <br><br>
+    <div id="shader">
       <h2>The Very Hungry Caterpillar Shader</h2>
-      <p>Raymarched scene coded in WebGL, inspired by the <a href="https://www.google.com/books/edition/The_Very_Hungry_Caterpillar/A_xtDwAAQBAJ?hl=en&gbpv=0">children's book</a>. 
-        All shapes are 3D primitives represented by signed distance functions with smooth blending or CSG (constructive solid geometry).
-        Implemented procedural texturing, including fractal brownian motion and worley noise. 
+      <p>WebGL<br>Rendered with raymarching, inspired by the <a href="https://www.google.com/books/edition/The_Very_Hungry_Caterpillar/A_xtDwAAQBAJ?hl=en&gbpv=0">children's book</a>. 
+        All shapes are 3D primitives represented by signed distance functions with smooth blending or CSG (constructive solid geometry). A depth of field blurring effect is achieved with a post-process gaussian blur linear interpolation. 
+        Most of the textures are created procedurally, using 2D/ 3D fractal brownian motion and worley noise. 
         See on <a href="https://www.shadertoy.com/view/tdfBR4">ShaderToy</a>.
       </p>
-      <br>
-      <br>
+      <br><br>
       <img src="images/caterpillar.gif" alt="GIF of shader.">
+    </div>
+    <br><br>
+    <div id="path-tracer">
+      <h2>Monte Carlo Path Tracer</h2>
+      <p>C++, OpenGL<br>Full path tracer with direct and global illuminuation. Rays are sampled with multiple importance sampling for estimating direct illumination. I also implemented a full lighting integrator,
+        using both direct and global illumination along with russian roulette ray termination. Materials with different BSDFs (specular, fresnel, microfacet) and different light sources (point, area, spot) are supported. Other 
+        features include a thin-lens camera and CSG (constructive solid geometry).
+      </p>
+      <br><br>
+      <div class="container">
+        <div class="row">
+          <div class="col-6"><img src="images/mirrors.png" alt="Image of render."></div>
+          <div class="col-6"> <img src="images/tree.png" alt="Image of render."></div>
+        </div>
+        <div class="row">
+          <div class="col-6"> <img src="images/csg.png" alt="Image of render."></div>
+          <div class="col-6"><img src="images/spotlight.png" alt="Image of render."></div>
+        </div>
+        <div class="row">
+          <div class="col-6"> <img src="images/grad.png" alt="Image of render."></div>
+          <div class="col-6"><img src="images/gradfull.png" alt="Image of render."></div>
+        </div>
+      </div>
+      <br><br>
     </div>
     <button onclick="topFunction()" id="to-top-btn" title="Go to top"> ^ </button>
     <script>scrollFunction();</script>
+    <footer>
+      <h2>Contact</h2>
+      <p>sharondo@seas.upenn.edu</p>
+    </footer>
   </body>
 </html>
