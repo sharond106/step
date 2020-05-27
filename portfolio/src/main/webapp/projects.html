@@ -6,38 +6,32 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-
   <div class="topnav">
     <a href="index.html">About</a>
     <a href="projects.html">Projects</a>
   </div>
-  
   <body>
-    <div id="intro">   
+    <div id="intro">
       <h1>My projects.</h1>
       <br>
       <h2>Poetry Generator (Group Project)</h2>
-        <p> A neural network trained to generate poetry by fine-tuning <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">GPT-2</a> on a large dataset of poems.
+      <p>A neural network trained to generate poetry by fine-tuning <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">GPT-2</a> on a large dataset of poems.
         Poems can be modified with various inputs, including sampling temperature, title, syllables and characters per line, number of words, number of poems, sentiment, alliteration, and rhyme scheme.
-        Also used <a href="https://arxiv.org/pdf/1810.04805.pdf>">BERT</a> masking to implement many of the modifiable features. 
-        </p>
+        Also used <a href="https://arxiv.org/pdf/1810.04805.pdf>">BERT</a> masking to implement many of the modifiable features.
         <br>
-        <p> Some generations:
-        </p>
-        <table style="width:100%">
+        Some generations:
+      </p>
+      <table style="width:100%">
         <tr>
-            <th>Inputs</th>
-            <th>Generations</th>
-        </tr>
+          <th>Inputs
+          <th>Generations
         <tr>
-            <td>Lines per Stanza: 3
+          <td>Lines per Stanza: 3
             <br>Number of poems: 1
             <br>Number of words: 200
             <br>Sentiment: Negative
             <br>Alliteration: s
-            </td>
-            <td> 
-            sick scent of the sea,
+          <td>sick scent of the sea,
             <br>In the synodic month
             <br>in the sky supra the sea
             <br>
@@ -54,88 +48,67 @@
             <br>you shall soon be uncertain
             <br>
             <br>what it symbolize to be a superpower:
-            </td>
-        </tr>
         <tr>
-            <td>Rhyme Scheme: aabb
-             <br>Unit: Syllables
-             <br>Units per line: 6,10
-             <br>Lines per Stanza: 2
-             <br>Number of words: 200
-
-             </td>
-            <td> 
-            I came away from your
+          <td>Rhyme Scheme: aabb
+            <br>Unit: Syllables
+            <br>Units per line: 6,10
+            <br>Lines per Stanza: 2
+            <br>Number of words: 200
+          <td>I came away from your
             <br>battleships of Iwo Jima or sure
-
             <br><br>battleships of Pearl till
             <br>I was a student living in brazil
-
             <br><br>dressed in a huge plaid band,
             <br>tucked into the back seat and By the stand
-
             <br><br>opposite a parks
             <br>made of tin and a concrete, I watched sharks
-
             <br><br>running their hooves kills
             <br>every another toward two hills
-
             <br><br>in a straight circle to
             <br>a distance I could see circling two
-
             <br><br>the elephants. What was
             <br>this moment, this fierce place? What I saw has
-
             <br><br>a wonderful loss state
             <br>history, absolutely great—
-            </td>
-        </tr>
         <tr>
-            <td>Title: Old McDonald Had A Farm
+          <td>Title: Old McDonald Had A Farm
             <br>Rhyme Scheme: eieio
             <br>Unit: Syllables
             <br>Units per line: 6,8,10
             <br>Lines per Stanza: 5
-
-            </td>
-            <td>...
-                <br>to see the world that once you mine
-           <br> was your own, a blue sky, the fields that grew
+          <td>...
+            <br>to see the world that once you mine
+            <br> was your own, a blue sky, the fields that grew
             <br>were green, your corn and wine
             <br>that was white, the corn and corn do
             <br>up like a record. The sun is in now
-
             <br><br>sky and the sky is green,
-           <br> and all our corn is now turn
+            <br> and all our corn is now turn
             <br>green, the fields that once were yellow, my queen
-           <br> with me, you with my learn
+            <br> with me, you with my learn
             <br>and our father with me, and
-
             <br><br>all our fields begin to turn green, third
             <br>to see the world that was
             <br>once your land. the spring air had stirred
             <br>my spirit into a dance, like a laws
             <br>of twelve meeting a girl
-
             <br><br>of seventeen, a young girl two
             <br>last act was to dance to an old one who,
-           <br> rather than trying to
+            <br> rather than trying to
             <br>forget it, was waiting for you
             <br>to leave for the day that you would be gone.
             <br>...
-            </td>
-        </tr>
-        </table>    
-      
+      </table>
       <br>
       <h2>The Very Hungry Caterpillar Shader</h2>
-        <p> Raymarched scene coded in WebGL, inspired by the <a href="https://www.google.com/books/edition/The_Very_Hungry_Caterpillar/A_xtDwAAQBAJ?hl=en&gbpv=0">children's book</a>. 
+      <p>Raymarched scene coded in WebGL, inspired by the <a href="https://www.google.com/books/edition/The_Very_Hungry_Caterpillar/A_xtDwAAQBAJ?hl=en&gbpv=0">children's book</a>. 
         All shapes are 3D primitives represented by signed distance functions with smooth blending or CSG (constructive solid geometry).
         Implemented procedural texturing, including fractal brownian motion and worley noise. 
         See on <a href="https://www.shadertoy.com/view/tdfBR4">ShaderToy</a>.
-        <br><br>
-        <img src="images/caterpillar.gif"/>
+      </p>
+      <br>
+      <br>
+      <img src="images/caterpillar.gif" alt="GIF of shader.">
     </div>
-    
   </body>
 </html>
