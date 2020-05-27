@@ -6,6 +6,7 @@ html {
 
 body {
   height: 100%;
+  font-family: 'Work Sans';
   margin: 0;
 }
 
@@ -13,7 +14,24 @@ body {
   background-image: url(images/background.jpg);
   background-position: center;
   background-size: cover;
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
   height: 100%;
+}
+
+#trans-text{
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: lavender;
+  font-weight: bold;
+  border: 3px solid lavender;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 70%;
+  padding: 20px;
+  text-align: center;
 }
 
 #about-me {
@@ -81,14 +99,26 @@ img {
 /* Style the top navigation bar */
 .topnav {
   overflow: hidden;
+  padding: 16px;
 }
 
 /* Style the topnav links */
 .topnav a {
   color: black;
   display: block;
+  float: right;
+  font-size: 20px;
+  padding: 14px 16px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.topnav-left a {
+  color: black;
+  display: block;
   float: left;
-  padding: 24px 26px;
+  font-size: 20px;
+  padding: 14px 16px;
   text-align: center;
   text-decoration: none;
 }
