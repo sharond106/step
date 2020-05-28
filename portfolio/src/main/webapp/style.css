@@ -147,8 +147,9 @@ img {
     background-color: #8e8ead;
 }
 
-footer {
+.footer {
   text-align: center;
-  padding: 20px;
+  padding: 20px 0px;
   background-color: #8e8ead;
+  margin: 0px;
 }
