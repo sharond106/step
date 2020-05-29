@@ -37,10 +37,25 @@ window.onscroll = function() {scrollFunction()};
 window.onhashchange = function() {scrollFunction()};
 
 function scrollFunction() {
-  button = document.getElementById("to-top-btn");
+  const button = document.getElementById("to-top-btn");
   if (window.pageYOffset > 20) {
     button.style.display = "block";
   } else {
     button.style.display = "none";
   }
+}
+
+// When the user clicks a photo, show image in modal
+function showModal(img) {
+  const modal = document.getElementById("my-modal");
+  const modalImg = document.getElementById("modal-img");
+  const modalCaption = document.getElementById("caption");
+  modal.style.display = "block";
+  modalImg.src = img.src;
+  modalCaption.innerHTML = img.alt;
+}
+
+function closeModal() {
+  const modal = document.getElementById("my-modal");
+  modal.style.display = "none";
 }

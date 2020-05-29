@@ -21,34 +21,42 @@
       <h1>My moments.</h1>
     </div>
     <br><br>
+    <!-- The Modal -->
+    <div id="my-modal" class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img class="modal-content" id="modal-img">
+      <br><br>
+      <div id="caption"></div>
+      <br><br>
+    </div>
     <div class="images-row">
       <div class="images-col">
-        <img src="images/me.jpg" alt="Picture of me hiking.">
-        <img src="images/canals.jpg" alt="Picture of my canals."> 
-        <img src="images/purpleflowers.jpg" alt="Picture of flowers.">
-        <img src="images/winter.jpg" alt="Picture of winter lake."> 
-        <img src="images/jason.png" alt="Picture of Jason."> 
-        <img src="images/temple.jpg" alt="Picture of temple in Shanghai."> 
-        <img src="images/lamb.jpg" alt="Picture of cookout.">  
+        <img src="images/me.jpg" alt="Picture of me hiking." onclick="showModal(this)">
+        <img src="images/canals.jpg" alt="Picture of my canals." onclick="showModal(this)"> 
+        <img src="images/purpleflowers.jpg" alt="Picture of flowers." onclick="showModal(this)">
+        <img src="images/winter.jpg" alt="Picture of winter lake." onclick="showModal(this)"> 
+        <img src="images/jason.png" alt="Picture of Jason." onclick="showModal(this)"> 
+        <img src="images/temple.jpg" alt="Picture of temple in Shanghai." onclick="showModal(this)"> 
+        <img src="images/lamb.jpg" alt="Picture of cookout." onclick="showModal(this)">  
       </div>
       <div class="images-col">
-        <img src="images/strawberries.jpg" alt="Picture of strawberries.">  
-        <img src="images/family.jpg" alt="Picture of my family.">  
-        <img src="images/sunset.jpg" alt="Picture of sunset.">
-        <img src="images/may.jpg" alt="Picture of my friend.">  
-        <img src="images/plane.jpg" alt="Picture on plane.">
-        <img src="images/shanghai.jpg" alt="Picture from Shanghai vacation."> 
-        <img src="images/portugal.jpg" alt="Picture of Porto."> 
+        <img src="images/strawberries.jpg" alt="Picture of strawberries." onclick="showModal(this)">  
+        <img src="images/family.jpg" alt="Picture of my family." onclick="showModal(this)">  
+        <img src="images/sunset.jpg" alt="Picture of sunset." onclick="showModal(this)">
+        <img src="images/may.jpg" alt="Picture of my friend." onclick="showModal(this)">  
+        <img src="images/plane.jpg" alt="Picture on plane." onclick="showModal(this)">
+        <img src="images/shanghai.jpg" alt="Picture from Shanghai vacation." onclick="showModal(this)"> 
+        <img src="images/portugal.jpg" alt="Picture of Porto." onclick="showModal(this)"> 
       </div>
       <div class="images-col">
-        <img src="images/hike2.jpg" alt="Picture from Norway hike."> 
-        <img src="images/sis.JPG" alt="Picture of my sister and me.">
-        <img src="images/fireworks.jpg" alt="Picture of fireworks.">
-        <img src="images/caro.jpg" alt="Picture of my friend.">  
-        <img src="images/castle.jpg" alt="Picture of castle in Portugal.">
-        <img src="images/bean.jpg" alt="Picture of Chicago bean.">
-        <img src="images/grad.jpg" alt="Picture of me at graduation.">   
-        <img src="images/cookies.jpg" alt="Picture of cookies.">  
+        <img src="images/hike2.jpg" alt="Picture from Norway hike." onclick="showModal(this)"> 
+        <img src="images/sis.JPG" alt="Picture of my sister and me." onclick="showModal(this)">
+        <img src="images/fireworks.jpg" alt="Picture of fireworks." onclick="showModal(this)">
+        <img src="images/caro.jpg" alt="Picture of my friend." onclick="showModal(this)">  
+        <img src="images/castle.jpg" alt="Picture of castle in Portugal." onclick="showModal(this)">
+        <img src="images/bean.jpg" alt="Picture of Chicago bean." onclick="showModal(this)">
+        <img src="images/grad.jpg" alt="Picture of me at graduation." onclick="showModal(this)">   
+        <img src="images/cookies.jpg" alt="Picture of cookies." onclick="showModal(this)">  
       </div>
     </div>
     <button onclick="topFunction()" id="to-top-btn" title="Go to top"> ^ </button>
