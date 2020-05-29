@@ -31,7 +31,7 @@ img {
 }
 
 .topnav {
-  background-color: lavender;
+  background: lavender;
   overflow: hidden;
   padding: 16px;
 }
@@ -66,13 +66,13 @@ img {
 }
 
 #to-top-btn {
-  background-color: #cec6e3;
+  background: #cec6e3;
   border: none;
   border-radius: 10px; /* Round corners */
   bottom: 50px;
   color: black;
   cursor: pointer; /* Add mouse pointer on hover */
-  outline:none;
+  outline: none;
   padding: 10px 16px 0;
   position: fixed;
   right: 50px;
@@ -81,7 +81,7 @@ img {
 }
 
 #to-top-btn:hover {
-    background-color: #8e8ead;
+  background: #8e8ead;
 }
 
 #pad {
@@ -107,7 +107,7 @@ img {
 }
 
 #trans-text{
-  background-color: rgba(0,0,0, 0.2); /* Black w/opacity/see-through */
+  background: rgba(0,0,0,.2); /* Black w/opacity/see-through */
   border: 3px solid lavender;
   color: lavender;
   font-weight: bold;
@@ -122,7 +122,7 @@ img {
 }
 
 #about-me {
-  background-color: lavender;
+  background: lavender;
   height: 100%;
   overflow: scroll;
   padding: 80px 130px;
@@ -151,7 +151,7 @@ img {
 }
 
 .footer {
-  background-color: #8e8ead;
+  background: #8e8ead;
   margin: 0;
   padding: 20px 0px;
   text-align: center;
@@ -159,8 +159,8 @@ img {
 
 /* Projects Page */
 
-table {
-  border-collapse: collapse;
+.projects-table {
+  border: collapse;
   width: 100%;
 }
 
@@ -204,7 +204,7 @@ th {
 .images-col img {
   cursor: pointer;
   margin-top: 4%;
-  transition: 0.3s;
+  transition: .3s;
   vertical-align: middle;
   width: 100%;
 }
@@ -228,7 +228,7 @@ th {
 /* Modal */
 
 .modal {
-  background-color: rgba(0,0,0,0.85); 
+  background: rgba(0,0,0,.85); 
   display: none;
   height: 100%; 
   left: 0;
@@ -249,6 +249,7 @@ th {
 #caption {
   color: #ccc;
   display: block;
+  font-size: 20px;
   margin: auto;
   padding: 10px 0;
   text-align: center;
@@ -256,13 +257,13 @@ th {
 }
 
 .modal-content, #caption {
-  animation-duration: 0.6s;
+  animation-duration: .6s;
   animation-name: zoom;
 }
 
 @keyframes zoom {
-  from {transform:scale(0)}
-  to {transform:scale(1)}
+  from {transform: scale(0)}
+  to {transform: scale(1)}
 }
 
 @media only screen and (max-width: 700px){
@@ -285,7 +286,7 @@ th {
   position: absolute;
   right: 35px;
   top: 15px;
-  transition: 0.3s;
+  transition: .3s;
 }
 
 .close:hover,
