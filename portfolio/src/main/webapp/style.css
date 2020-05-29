@@ -73,7 +73,7 @@ img {
   color: black;
   cursor: pointer; /* Add mouse pointer on hover */
   outline:none;
-  padding: 10px 17px 0;
+  padding: 10px 16px 0;
   position: fixed;
   right: 50px;
   font-size: 25px;

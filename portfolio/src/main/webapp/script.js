@@ -44,8 +44,3 @@ function scrollFunction() {
     button.style.display = "none";
   }
 }
-
-function newPage() {
-  button = document.getElementById("to-top-btn");
-  button.style.display = "none";
-}
