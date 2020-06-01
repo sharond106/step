@@ -44,3 +44,11 @@ function closeModal() {
   const modal = document.getElementById("my-modal");
   modal.style.display = "none";
 }
+
+// Request content from server
+function getServerData() {
+  console.log("Fetching data.");
+  const promise = fetch("/data").then(response => response.text()).then(greeting => {
+    document.getElementById('data-container').innerText = greeting;
+  });
+}
