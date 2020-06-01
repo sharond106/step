@@ -48,8 +48,12 @@ function closeModal() {
 // Request content from server
 function getServerData() {
   console.log("Fetching data.");
-  const promise = fetch("/data").then(response => response.json()).then(greeting => {
-    console.log(greeting);
-    document.getElementById('data-container').innerText = greeting;
+  const promise = fetch("/comment").then(response => response.json()).then(comments => {
+    console.log(comments[comments.length - 1]);
+
+    const thread = document.getElementById('all-comments');
+    for (var i = comments.length - 1; i >= 0; i--) {
+        thread.innerHTML += (comments[i] + "<br>");
+    }
   });
 }

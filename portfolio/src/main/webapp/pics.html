@@ -2,13 +2,13 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Projects</title>
+    <title>Pictures</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Work Sans" rel="stylesheet">  
     <script src="script.js"></script>
   </head>
   
-  <body>
+  <body onload="getServerData()">
     <div class="topnav">
       <div class="topnav-left">
         <a href="index.html">Sharon Dong</a>
@@ -20,6 +20,12 @@
     </div>
     <div id="pad">
       <h1>My moments.</h1>
+      <form action="/comment" method="POST">
+        <p>Comment</p>
+        <input type="text" name="comment">
+        <input type="submit" value="Post">
+      </form>
+      <p id="all-comments"></p>
     </div>
     <br><br>
     <!-- The Modal -->
