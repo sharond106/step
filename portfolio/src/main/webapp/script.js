@@ -12,21 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
-function addRandomFact() {
-  const facts =
-      ['I have a twin sister!', 'I was born in NYC!', 'I like to cross stitch!', 'I grew up in Pittsburgh!'];
-
-  // Pick a random greeting.
-  const fact = facts[Math.floor(Math.random() * facts.length)];
-
-  // Add it to the page.
-  const factContainer = document.getElementById('fact-container');
-  factContainer.innerText = fact;
-}
-
 // Scroll to the top of the document
 function topFunction() {
   document.documentElement.scrollTop = 0; 

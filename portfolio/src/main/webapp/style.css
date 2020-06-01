@@ -88,6 +88,7 @@ a {
   padding: 80px 140px 20px;
 }
 
+/* Reduces padding when the width of screen is <= 600px */
 @media screen and (max-width: 600px) {
   #pad {
     padding: 5%;
