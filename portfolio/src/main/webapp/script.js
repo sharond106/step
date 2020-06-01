@@ -12,17 +12,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+// Scroll to the top of the document
+function topFunction() {
+  document.documentElement.scrollTop = 0; 
+}
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+window.onhashchange = function() {scrollFunction()};
 
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+function scrollFunction() {
+  const button = document.getElementById("to-top-btn");
+  if (window.pageYOffset > 20) {
+    button.style.display = "block";
+  } else {
+    button.style.display = "none";
+  }
+}
+
+// When the user clicks a photo, show image in modal
+function showModal(img) {
+  const modal = document.getElementById("my-modal");
+  const modalImg = document.getElementById("modal-img");
+  const modalCaption = document.getElementById("caption");
+  modal.style.display = "block";
+  modalImg.src = img.src;
+  modalCaption.innerHTML = img.alt;
+}
+
+function closeModal() {
+  const modal = document.getElementById("my-modal");
+  modal.style.display = "none";
+}
+
+// Request content from server
+function getServerData() {
+  console.log("Fetching data.");
+  const promise = fetch("/data").then(response => response.json()).then(greeting => {
+    console.log(greeting);
+    document.getElementById('data-container').innerText = greeting;
+  });
 }
