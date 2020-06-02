@@ -40,6 +40,12 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
+    String quantity = request.getParameter("quantity");
+    int max = -1;
+    if (quantity.length() > 0) {
+      max = Integer.parseInt(request.getParameter("quantity"));
+    }
+    int i = 0;
     ArrayList<Comment> comments = new ArrayList<Comment>();
     for (Entity entity : results.asIterable()) {
       String comment = (String) entity.getProperty("comment");
@@ -48,6 +54,10 @@ public class DataServlet extends HttpServlet {
 
       Comment c = new Comment(name, comment, timestamp);
       comments.add(c);
+      i++;
+      if (max != -1 && i >= max) {
+          break;
+      }
     }
 
     Gson gson = new Gson();

@@ -49,11 +49,15 @@ function closeModal() {
 // Request content from server
 function getServerData() {
   console.log("Fetching data.");
-  const promise = fetch("/comment").then(response => response.json()).then(comments => {
+  const num = document.getElementById("quantity").value;
+
+  fetch("/comment?quantity=" + num).then(response => response.json()).then(comments => {
     console.log(comments[comments.length - 1]);
     const thread = document.getElementById('all-comments');
+    thread.innerHTML = "";
     comments.forEach((comment) => {
       thread.innerHTML += (comment.name + "<br>" + comment.comment + "<br><br>");
     })
-  });
+  })
+  .catch(error => console.error(error));
 }
