@@ -51,10 +51,9 @@ function getServerData() {
   console.log("Fetching data.");
   const promise = fetch("/comment").then(response => response.json()).then(comments => {
     console.log(comments[comments.length - 1]);
-
     const thread = document.getElementById('all-comments');
-    for (var i = 0; i < comments.length; i++) {
-        thread.innerHTML += (comments[i] + "<br>");
-    }
+    comments.forEach((comment) => {
+      thread.innerHTML += (comment.name + "<br>" + comment.comment + "<br><br>");
+    })
   });
 }
