@@ -57,19 +57,16 @@ function getServerData() {
     list.innerHTML = "";
     comments.forEach((comment) => {
       const listElement = document.createElement("li");
+
       const textElement = document.createElement("span");
       textElement.innerHTML = comment.name + "<br>" + comment.comment + "<br><br>";
+
       const deleteButtonElement = document.createElement('button');
       deleteButtonElement.innerText = 'Delete';
       deleteButtonElement.addEventListener('click', () => {
         console.log("Delete button clicked");
         deleteComment(comment);
-
-        // Remove the task from the DOM.
-        //list.remove();
       });
-
-      //list.innerHTML += (comment.name + "<br>" + comment.comment + "<br><br>");
       
       listElement.appendChild(textElement);
       listElement.appendChild(deleteButtonElement);
