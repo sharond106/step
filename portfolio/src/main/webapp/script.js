@@ -53,7 +53,7 @@ function getServerData() {
     console.log(comments[comments.length - 1]);
 
     const thread = document.getElementById('all-comments');
-    for (var i = comments.length - 1; i >= 0; i--) {
+    for (var i = 0; i < comments.length; i++) {
         thread.innerHTML += (comments[i] + "<br>");
     }
   });
