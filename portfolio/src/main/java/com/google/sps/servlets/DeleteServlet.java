@@ -40,14 +40,6 @@ public class DeleteServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.delete(entityKey);
 
-    // Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
-
-    // DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    // PreparedQuery results = datastore.prepare(query);
-
-    // for (Entity entity : results.asIterable()) {
-    //     datastore.delete(entity.getKey());
-    // }
     response.sendRedirect("/pics.html");
   }
 }

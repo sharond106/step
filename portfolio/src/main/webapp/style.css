@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  font-family: 'Work Sans';
+  font-family: "Work Sans";
   height: 100%;
   margin: 0;
 }
@@ -262,7 +262,7 @@ th {
 }
 
 .images-col img:hover {
-  opacity: 0.7;
+  opacity: .7;
 }
 
 @media screen and (max-width: 600px) {
@@ -345,4 +345,58 @@ th {
   color: #bbb;
   cursor: pointer;
   text-decoration: none;
+}
+
+/* Comments */
+#all-comments {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#all-comments li {
+  font-family: "Work Sans";
+  font-size: 20px;
+  width: 60%;
+}
+
+#quantity {
+  text-align: center;
+}
+
+.input-box {
+  font-family: "Work Sans";
+  font-size: 20px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  width: 60%;
+}
+
+#comment-box {
+  height: 150px;
+}
+
+button,
+input[type=submit] {
+  background-color: lavender;
+  border: none;
+  cursor: pointer;
+  font-family: "Work Sans";
+  font-size: 20px;
+  margin: 4px 2px;
+  padding: 10px 22px;
+}
+
+.button:hover,
+input[type=submit]:hover {
+  opacity: .7;
+}
+
+label {
+  font-family: "Work Sans";
+  font-size: 20px;
+}
+
+.delete-button {
+  float: right;
 }

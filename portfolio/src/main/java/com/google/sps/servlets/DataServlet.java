@@ -64,6 +64,7 @@ public class DataServlet extends HttpServlet {
     }
 
     //int numComments = results.countEntities(FetchOptions.Builder);
+    
     Gson gson = new Gson();
     String json = gson.toJson(comments);
 

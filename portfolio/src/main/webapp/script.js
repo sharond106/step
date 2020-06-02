@@ -59,9 +59,10 @@ function getServerData() {
       const listElement = document.createElement("li");
 
       const textElement = document.createElement("span");
-      textElement.innerHTML = comment.name + "<br>" + comment.comment + "<br><br>";
+      textElement.innerHTML = comment.name + "<br>" + comment.comment;
 
       const deleteButtonElement = document.createElement('button');
+      deleteButtonElement.className = "delete-button";
       deleteButtonElement.innerText = 'Delete';
       deleteButtonElement.addEventListener('click', () => {
         console.log("Delete button clicked");
@@ -71,6 +72,7 @@ function getServerData() {
       listElement.appendChild(textElement);
       listElement.appendChild(deleteButtonElement);
       list.append(listElement);
+      list.innerHTML += "<br>"
     })
   })
   .catch(error => console.error(error));
