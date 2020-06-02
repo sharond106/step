@@ -38,6 +38,7 @@ function showModal(img) {
   modal.style.display = "block";
   modalImg.src = img.src;
   modalCaption.innerHTML = img.alt;
+  getServerData();
 }
 
 function closeModal() {

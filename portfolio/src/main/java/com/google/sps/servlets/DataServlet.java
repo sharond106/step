@@ -14,6 +14,9 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList; 
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet responsible for handling comments data */
 @WebServlet("/comment")
 public class DataServlet extends HttpServlet {
   ArrayList<String> comments = new ArrayList<String>();
@@ -39,6 +42,13 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = getParameter(request, "comment", "");
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("comment", comment);
+    
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+    
     comments.add(comment);
     response.setContentType("text/html;");
     response.getWriter().println(comment);
