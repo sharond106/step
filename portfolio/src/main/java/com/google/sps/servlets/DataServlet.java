@@ -42,17 +42,18 @@ public class DataServlet extends HttpServlet {
 
     String quantity = request.getParameter("quantity");
     int max = -1;
-    if (quantity.length() > 0) {
-      max = Integer.parseInt(request.getParameter("quantity"));
+    if (quantity != null && quantity.length() > 0) {
+      max = Integer.parseInt(quantity);
     }
     int i = 0;
     ArrayList<Comment> comments = new ArrayList<Comment>();
     for (Entity entity : results.asIterable()) {
+      long id = entity.getKey().getId();  
       String comment = (String) entity.getProperty("comment");
       String name = (String) entity.getProperty("name");
       long timestamp = (long) entity.getProperty("timestamp");
 
-      Comment c = new Comment(name, comment, timestamp);
+      Comment c = new Comment(id, name, comment, timestamp);
       comments.add(c);
       i++;
       if (max != -1 && i >= max) {

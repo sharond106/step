@@ -57,6 +57,7 @@ function getServerData() {
     thread.innerHTML = "";
     comments.forEach((comment) => {
       thread.innerHTML += (comment.name + "<br>" + comment.comment + "<br><br>");
+      //add delete button that calls new delete function 
     })
   })
   .catch(error => console.error(error));
