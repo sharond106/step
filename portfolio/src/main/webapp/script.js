@@ -53,12 +53,44 @@ function getServerData() {
 
   fetch("/comment?quantity=" + num).then(response => response.json()).then(comments => {
     console.log(comments[comments.length - 1]);
-    const thread = document.getElementById('all-comments');
-    thread.innerHTML = "";
+    const list = document.getElementById('all-comments');
+    list.innerHTML = "";
     comments.forEach((comment) => {
-      thread.innerHTML += (comment.name + "<br>" + comment.comment + "<br><br>");
-      //add delete button that calls new delete function 
+      const listElement = document.createElement("li");
+      const textElement = document.createElement("span");
+      textElement.innerHTML = comment.name + "<br>" + comment.comment + "<br><br>";
+      const deleteButtonElement = document.createElement('button');
+      deleteButtonElement.innerText = 'Delete';
+      deleteButtonElement.addEventListener('click', () => {
+        console.log("Delete button clicked");
+        deleteComment(comment);
+
+        // Remove the task from the DOM.
+        //list.remove();
+      });
+
+      //list.innerHTML += (comment.name + "<br>" + comment.comment + "<br><br>");
+      
+      listElement.appendChild(textElement);
+      listElement.appendChild(deleteButtonElement);
+      list.append(listElement);
     })
   })
   .catch(error => console.error(error));
+}
+
+function deleteComment(comment) {
+  console.log("Deleting comment");
+
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  const postRequest = new Request("/delete", {method: "POST", body: params});
+  fetch(postRequest).then(results => getServerData()).catch(error => console.error(error));
+}
+
+function deleteAllComments() {
+  console.log("Deleting all comments");
+
+  const postRequest = new Request("/delete", {method: "POST"});
+  fetch(postRequest).then(results => getServerData()).catch(error => console.error(error));
 }
