@@ -51,8 +51,9 @@ function getServerData() {
   console.log("Fetching data.");
   const maxElement = document.getElementById("quantity");
   const maxToDisplay = maxElement.value;
+  const sort = document.getElementById("sort").value;
 
-  fetch("/comment?quantity=" + maxToDisplay).then(response => response.json()).then(jsonObj => {
+  fetch("/comment?quantity=" + maxToDisplay + "&sort=" + sort).then(response => response.json()).then(jsonObj => {
     const comments = jsonObj.comments;
     console.log(comments[comments.length - 1]);
     const total = jsonObj.total;
@@ -70,7 +71,7 @@ function getServerData() {
       const listElement = document.createElement("li");
 
       const textElement = document.createElement("span");
-      textElement.innerHTML = comment.name + "<br>" + comment.comment;
+      textElement.innerHTML = comment.name + "<br><br>" + comment.comment;
 
       const deleteButtonElement = document.createElement("button");
       deleteButtonElement.className = "delete-button";

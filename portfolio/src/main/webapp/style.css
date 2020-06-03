@@ -365,7 +365,10 @@ th {
   padding: 12px 20px;
 }
 
-#quantity {
+#quantity,
+#sort {
+  font-family: "Work Sans";
+  font-size: 20px;
   text-align: center;
 }
 
