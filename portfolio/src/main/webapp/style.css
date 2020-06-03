@@ -349,16 +349,20 @@ th {
 
 /* Comments */
 #all-comments {
+  border-bottom: 1px solid #cec6e3;
   list-style: none;
   margin: 0;
   padding: 0;
+  width: 60%;
 }
 
 #all-comments li {
+  border-top: 1px solid #cec6e3;
   font-family: "Work Sans";
   font-size: 20px;
+  list-style-position:inside;
   margin: 40px 0;
-  width: 60%;
+  padding: 12px 20px;
 }
 
 #quantity {
@@ -384,16 +388,13 @@ input[type=submit] {
   cursor: pointer;
   font-family: "Work Sans";
   font-size: 20px;
+  margin: 4px 2px;
   padding: 10px 22px;
 }
 
 button:hover,
 input[type=submit]:hover {
   opacity: .7;
-}
-
-#post-button {
-  margin: 4px 2px;
 }
 
 label {
