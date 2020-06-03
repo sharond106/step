@@ -21,11 +21,10 @@
     <div id="pad">
       <h1>My moments.</h1>
       <br>
-      <h2>Comments</h2>
+      <h2 id="total">Comments</h2>
       <label for="quantity">Maximum number to display:</label>
-      <input type="number" id="quantity" name="quantity" min="1" max="5" placeholder="5" onchange="getServerData()">
+      <input type="number" id="quantity" name="quantity" min="1" max="5" onchange="getServerData()">
       <form action="/comment" method="POST">
-        <p id="total"></p>
         <textarea name="comment" class="input-box" id="comment-box" placeholder="Comment"></textarea><br>
         <input type="text" name="name" class="input-box" placeholder="Name">
         <input type="submit" id="post-button" value="Post">

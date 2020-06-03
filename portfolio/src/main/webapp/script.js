@@ -49,11 +49,22 @@ function closeModal() {
 // Request content from server
 function getServerData() {
   console.log("Fetching data.");
-  const num = document.getElementById("quantity").value;
+  const maxElement = document.getElementById("quantity");
+  const maxToDisplay = maxElement.value;
 
-  fetch("/comment?quantity=" + num).then(response => response.json()).then(comments => {
+  fetch("/comment?quantity=" + maxToDisplay).then(response => response.json()).then(jsonObj => {
+    const comments = jsonObj.comments;
     console.log(comments[comments.length - 1]);
-    const list = document.getElementById('all-comments');
+    const total = jsonObj.total;
+    console.log(total);
+
+    const totalElement = document.getElementById("total");
+    totalElement.innerText = ("Comments (" + total + ")");
+
+    maxElement.max = total.toString();
+    maxElement.placeholder = total.toString();
+
+    const list = document.getElementById("all-comments");
     list.innerHTML = "";
     comments.forEach((comment) => {
       const listElement = document.createElement("li");
@@ -61,10 +72,10 @@ function getServerData() {
       const textElement = document.createElement("span");
       textElement.innerHTML = comment.name + "<br>" + comment.comment;
 
-      const deleteButtonElement = document.createElement('button');
+      const deleteButtonElement = document.createElement("button");
       deleteButtonElement.className = "delete-button";
-      deleteButtonElement.innerText = 'Delete';
-      deleteButtonElement.addEventListener('click', () => {
+      deleteButtonElement.innerText = "Delete";
+      deleteButtonElement.addEventListener("click", () => {
         console.log("Delete button clicked");
         deleteComment(comment);
       });
@@ -81,7 +92,7 @@ function deleteComment(comment) {
   console.log("Deleting comment");
 
   const params = new URLSearchParams();
-  params.append('id', comment.id);
+  params.append("id", comment.id);
   const postRequest = new Request("/delete", {method: "POST", body: params});
   fetch(postRequest).then(() => getServerData()).catch(error => console.error(error));
 }

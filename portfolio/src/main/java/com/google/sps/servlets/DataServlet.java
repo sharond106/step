@@ -42,14 +42,18 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
+    int numComments = results.countEntities(FetchOptions.Builder.withDefaults());
+
     String quantity = request.getParameter("quantity");
     int max = -1;
     if (quantity != null && quantity.length() > 0) {
       max = Integer.parseInt(quantity);
+    } else {
+      max = numComments;
     }
-    int i = 0;
+
     ArrayList<Comment> comments = new ArrayList<Comment>();
-    for (Entity entity : results.asIterable()) {
+    for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(max))) {
       long id = entity.getKey().getId();  
       String comment = (String) entity.getProperty("comment");
       String name = (String) entity.getProperty("name");
@@ -57,16 +61,16 @@ public class DataServlet extends HttpServlet {
 
       Comment c = new Comment(id, name, comment, timestamp);
       comments.add(c);
-      i++;
-      if (max != -1 && i >= max) {
-          break;
-      }
     }
-
-    //int numComments = results.countEntities(FetchOptions.Builder);
     
     Gson gson = new Gson();
-    String json = gson.toJson(comments);
+    String json = "{";
+    json += "\"comments\": ";
+    json += gson.toJson(comments);
+    json += ", ";
+    json += "\"total\": ";
+    json += numComments;
+    json += "}";
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
