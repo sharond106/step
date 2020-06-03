@@ -357,6 +357,7 @@ th {
 #all-comments li {
   font-family: "Work Sans";
   font-size: 20px;
+  margin: 40px 0;
   width: 60%;
 }
 
@@ -383,13 +384,16 @@ input[type=submit] {
   cursor: pointer;
   font-family: "Work Sans";
   font-size: 20px;
-  margin: 4px 2px;
   padding: 10px 22px;
 }
 
-.button:hover,
+button:hover,
 input[type=submit]:hover {
   opacity: .7;
+}
+
+#post-button {
+  margin: 4px 2px;
 }
 
 label {

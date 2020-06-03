@@ -72,7 +72,6 @@ function getServerData() {
       listElement.appendChild(textElement);
       listElement.appendChild(deleteButtonElement);
       list.append(listElement);
-      list.innerHTML += "<br>"
     })
   })
   .catch(error => console.error(error));
@@ -84,12 +83,5 @@ function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
   const postRequest = new Request("/delete", {method: "POST", body: params});
-  fetch(postRequest).then(results => getServerData()).catch(error => console.error(error));
-}
-
-function deleteAllComments() {
-  console.log("Deleting all comments");
-
-  const postRequest = new Request("/delete", {method: "POST"});
-  fetch(postRequest).then(results => getServerData()).catch(error => console.error(error));
+  fetch(postRequest).then(() => getServerData()).catch(error => console.error(error));
 }
