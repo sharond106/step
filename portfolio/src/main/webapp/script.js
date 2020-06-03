@@ -62,9 +62,11 @@ function getServerData() {
     const totalElement = document.getElementById("total");
     totalElement.innerText = ("Comments (" + total + ")");
 
+    // Set maximum number of comments to show as the total number of comments (returned from fetch)
     maxElement.max = total.toString();
     maxElement.placeholder = total.toString();
 
+    // Add individual comments to html page
     const list = document.getElementById("all-comments");
     list.innerHTML = "";
     comments.forEach((comment) => {
@@ -109,8 +111,9 @@ function postComment() {
   params.append("comment", commentElement.value);
   const postRequest = new Request("/comment", {method: "POST", body: params});
 
+  // Reset textboxes 
   nameElement.value = "";
   commentElement.value = "";
-  
+
   fetch(postRequest).then(() => getServerData()).catch(error => console.error(error));
 }

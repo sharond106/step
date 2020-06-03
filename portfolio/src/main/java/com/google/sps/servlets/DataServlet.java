@@ -39,6 +39,7 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String sort = request.getParameter("sort");
 
+    // Sort comments according to request parameter
     Query query;
     if (sort.equals("new")) {
       query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
@@ -51,6 +52,7 @@ public class DataServlet extends HttpServlet {
 
     int numComments = results.countEntities(FetchOptions.Builder.withDefaults());
 
+    // Set the number of comments to print (max)
     String quantity = request.getParameter("quantity");
     int max = -1;
     if (quantity != null && quantity.length() > 0) {
@@ -59,6 +61,7 @@ public class DataServlet extends HttpServlet {
       max = numComments;
     }
 
+    // Create Comment objects and add to comments ArrayList
     ArrayList<Comment> comments = new ArrayList<Comment>();
     for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(max))) {
       long id = entity.getKey().getId();  
@@ -70,6 +73,7 @@ public class DataServlet extends HttpServlet {
       comments.add(c);
     }
     
+    // Create json String to print to /comments
     Gson gson = new Gson();
     String json = "{";
     json += "\"comments\": ";
