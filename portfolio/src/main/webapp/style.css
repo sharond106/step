@@ -348,12 +348,16 @@ th {
 }
 
 /* Comments */
+#comments-container {
+  color: white;
+  margin: auto;
+  width: 60%;
+}
+
 #all-comments {
   border-bottom: 1px solid #cec6e3;
   list-style: none;
-  margin: 0;
   padding: 0;
-  width: 60%;
 }
 
 #all-comments li {
@@ -361,7 +365,7 @@ th {
   font-family: "Work Sans";
   font-size: 20px;
   list-style-position:inside;
-  margin: 40px 0;
+  margin: 40px auto;
   padding: 12px 20px;
 }
 
@@ -375,9 +379,9 @@ th {
 .input-box {
   font-family: "Work Sans";
   font-size: 20px;
+  margin: 8px auto;
   padding: 12px 20px;
-  margin: 8px 0;
-  width: 60%;
+  width: 100%;
 }
 
 #comment-box {

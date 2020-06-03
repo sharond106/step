@@ -97,3 +97,20 @@ function deleteComment(comment) {
   const postRequest = new Request("/delete", {method: "POST", body: params});
   fetch(postRequest).then(() => getServerData()).catch(error => console.error(error));
 }
+
+function postComment() {
+  console.log("Posting comment");
+
+  const nameElement = document.getElementById("name");
+  const commentElement = document.getElementById("comment-box");
+
+  const params = new URLSearchParams();
+  params.append("name", nameElement.value);
+  params.append("comment", commentElement.value);
+  const postRequest = new Request("/comment", {method: "POST", body: params});
+
+  nameElement.value = "";
+  commentElement.value = "";
+  
+  fetch(postRequest).then(() => getServerData()).catch(error => console.error(error));
+}
