@@ -52,8 +52,9 @@ function getServerData() {
   const maxElement = document.getElementById("quantity");
   const maxToDisplay = maxElement.value;
   const sort = document.getElementById("sort").value;
+  const img = document.getElementById("modal-img").src;
 
-  fetch("/comment?quantity=" + maxToDisplay + "&sort=" + sort).then(response => response.json()).then(jsonObj => {
+  fetch("/comment?quantity=" + maxToDisplay + "&sort=" + sort + "&img=" + img).then(response => response.json()).then(jsonObj => {
     const comments = jsonObj.comments;
     console.log(comments[comments.length - 1]);
     const total = jsonObj.total;
@@ -105,10 +106,12 @@ function postComment() {
 
   const nameElement = document.getElementById("name");
   const commentElement = document.getElementById("comment-box");
+  const imgElement = document.getElementById("modal-img");
 
   const params = new URLSearchParams();
   params.append("name", nameElement.value);
   params.append("comment", commentElement.value);
+  params.append("img", imgElement.src);
   const postRequest = new Request("/comment", {method: "POST", body: params});
 
   // Reset textboxes 

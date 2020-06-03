@@ -21,6 +21,9 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.FetchOptions.Builder;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
@@ -41,10 +44,11 @@ public class DataServlet extends HttpServlet {
 
     // Sort comments according to request parameter
     Query query;
+    FilterPredicate filter = new FilterPredicate("img", Query.FilterOperator.EQUAL, request.getParameter("img"));
     if (sort.equals("new")) {
-      query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+      query = new Query("Comment").setFilter(filter).addSort("timestamp", SortDirection.DESCENDING);
     } else {
-      query = new Query("Comment").addSort("timestamp", SortDirection.ASCENDING);
+      query = new Query("Comment").setFilter(filter).addSort("timestamp", SortDirection.ASCENDING);
     }
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -68,8 +72,9 @@ public class DataServlet extends HttpServlet {
       String comment = (String) entity.getProperty("comment");
       String name = (String) entity.getProperty("name");
       long timestamp = (long) entity.getProperty("timestamp");
+      String img = (String) entity.getProperty("img");
 
-      Comment c = new Comment(id, name, comment, timestamp);
+      Comment c = new Comment(id, name, comment, timestamp, img);
       comments.add(c);
     }
     
@@ -91,12 +96,14 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = getParameter(request, "comment", "");
     String name = getParameter(request, "name", "");
+    String img = getParameter(request, "img", "");
     long timestamp = System.currentTimeMillis();
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("timestamp", timestamp);
+    commentEntity.setProperty("img", img);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
