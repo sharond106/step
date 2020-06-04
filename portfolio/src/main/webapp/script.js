@@ -19,7 +19,6 @@ function topFunction() {
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function() {scrollFunction()};
-window.onhashchange = function() {scrollFunction()};
 
 function scrollFunction() {
   const button = document.getElementById("to-top-btn");
@@ -52,8 +51,15 @@ function getServerData() {
   const maxElement = document.getElementById("quantity");
   const maxToDisplay = maxElement.value;
   const sort = document.getElementById("sort").value;
-  const img = document.getElementById("modal-img").src;
+  
+  const imgsrc = document.getElementById("modal-img").src;
+  const splitimg = imgsrc.split("/");
+  console.log(splitimg);
+  const img = splitimg[splitimg.length - 1];
 
+  console.log(sort);
+  console.log(maxToDisplay);
+  
   fetch("/comment?quantity=" + maxToDisplay + "&sort=" + sort + "&img=" + img).then(response => response.json()).then(jsonObj => {
     const comments = jsonObj.comments;
     console.log(comments[comments.length - 1]);
@@ -106,12 +112,15 @@ function postComment() {
 
   const nameElement = document.getElementById("name");
   const commentElement = document.getElementById("comment-box");
-  const imgElement = document.getElementById("modal-img");
+  const imgsrc = document.getElementById("modal-img").src;
+  const splitimg = imgsrc.split("/");
+  console.log(splitimg);
+  const img = splitimg[splitimg.length - 1];
 
   const params = new URLSearchParams();
   params.append("name", nameElement.value);
   params.append("comment", commentElement.value);
-  params.append("img", imgElement.src);
+  params.append("img", img);
   const postRequest = new Request("/comment", {method: "POST", body: params});
 
   // Reset textboxes 

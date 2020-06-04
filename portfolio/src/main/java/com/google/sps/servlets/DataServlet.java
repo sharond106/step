@@ -34,20 +34,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList; 
 
-/** Servlet responsible for handling comments data */
+// Servlet responsible for handling comments data 
 @WebServlet("/comment")
 public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String sort = request.getParameter("sort");
-
+    
     // Sort comments according to request parameter
-    Query query;
     FilterPredicate filter = new FilterPredicate("img", Query.FilterOperator.EQUAL, request.getParameter("img"));
-    if (sort.equals("new")) {
-      query = new Query("Comment").setFilter(filter).addSort("timestamp", SortDirection.DESCENDING);
-    } else {
+    Query query = new Query("Comment").setFilter(filter).addSort("timestamp", SortDirection.DESCENDING);
+    if (sort != null && sort.equals("old")) {
       query = new Query("Comment").setFilter(filter).addSort("timestamp", SortDirection.ASCENDING);
     }
 
@@ -69,24 +67,18 @@ public class DataServlet extends HttpServlet {
     ArrayList<Comment> comments = new ArrayList<Comment>();
     for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(max))) {
       long id = entity.getKey().getId();  
-      String comment = (String) entity.getProperty("comment");
       String name = (String) entity.getProperty("name");
+      String comment = (String) entity.getProperty("comment");
       long timestamp = (long) entity.getProperty("timestamp");
       String img = (String) entity.getProperty("img");
 
-      Comment c = new Comment(id, name, comment, timestamp, img);
-      comments.add(c);
+      Comment newComment = new Comment(id, name, comment, timestamp, img);
+      comments.add(newComment);
     }
     
     // Create json String to print to /comments
     Gson gson = new Gson();
-    String json = "{";
-    json += "\"comments\": ";
-    json += gson.toJson(comments);
-    json += ", ";
-    json += "\"total\": ";
-    json += numComments;
-    json += "}";
+    String json = String.format("{\"comments\": %s, \"total\": %s}", gson.toJson(comments), numComments);
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
@@ -94,16 +86,21 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = getParameter(request, "comment", "");
+    String comment = request.getParameter("comment");
     String name = getParameter(request, "name", "");
     String img = getParameter(request, "img", "");
     long timestamp = System.currentTimeMillis();
 
+    if (comment == null || comment.length() == 0) {
+      response.sendRedirect("/pics.html");
+      return;
+    }
+
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("name", name);
-    commentEntity.setProperty("timestamp", timestamp);
     commentEntity.setProperty("img", img);
+    commentEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
