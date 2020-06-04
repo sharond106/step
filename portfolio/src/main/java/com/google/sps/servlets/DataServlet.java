@@ -41,12 +41,12 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String sort = request.getParameter("sort");
-    
+    String imgRequest = request.getParameter("img");
+
     // Sort comments according to request parameter
-    FilterPredicate filter = new FilterPredicate("img", Query.FilterOperator.EQUAL, request.getParameter("img"));
-    Query query = new Query("Comment").setFilter(filter).addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     if (sort != null && sort.equals("old")) {
-      query = new Query("Comment").setFilter(filter).addSort("timestamp", SortDirection.ASCENDING);
+      query = new Query("Comment").addSort("timestamp", SortDirection.ASCENDING);
     }
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -65,20 +65,27 @@ public class DataServlet extends HttpServlet {
 
     // Create Comment objects and add to comments ArrayList
     ArrayList<Comment> comments = new ArrayList<Comment>();
-    for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(max))) {
+    int count = 0;
+    for (Entity entity : results.asIterable()) {
       long id = entity.getKey().getId();  
       String name = (String) entity.getProperty("name");
       String comment = (String) entity.getProperty("comment");
       long timestamp = (long) entity.getProperty("timestamp");
       String img = (String) entity.getProperty("img");
 
-      Comment newComment = new Comment(id, name, comment, timestamp, img);
-      comments.add(newComment);
+      // Only add the comment if it's linked with the current img
+      if (img.equals(imgRequest)) {
+        Comment newComment = new Comment(id, name, comment, timestamp, img);
+        count++;
+        if (count <= max) {
+            comments.add(newComment);
+        }
+      }
     }
     
     // Create json String to print to /comments
     Gson gson = new Gson();
-    String json = String.format("{\"comments\": %s, \"total\": %s}", gson.toJson(comments), numComments);
+    String json = String.format("{\"comments\": %s, \"total\": %s}", gson.toJson(comments), count);
 
     response.setContentType("application/json;");
     response.getWriter().println(json);

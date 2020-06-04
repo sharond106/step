@@ -43,6 +43,8 @@ function showModal(img) {
 function closeModal() {
   const modal = document.getElementById("my-modal");
   modal.style.display = "none";
+  const maxElement = document.getElementById("quantity");
+  maxElement.value = "";
 }
 
 // Request content from server
@@ -55,7 +57,10 @@ function getServerData() {
   const imgsrc = document.getElementById("modal-img").src;
   const splitimg = imgsrc.split("/");
   console.log(splitimg);
-  const img = splitimg[splitimg.length - 1];
+  // Get image file name in img tag's src field (ex: flowers.jpg)
+  const splitname = splitimg[splitimg.length - 1].split(".");
+  // Get string before file format string (remove .jpg)
+  const img = splitname[0];
 
   console.log(sort);
   console.log(maxToDisplay);
@@ -94,8 +99,7 @@ function getServerData() {
       listElement.appendChild(deleteButtonElement);
       list.append(listElement);
     })
-  })
-  .catch(error => console.error(error));
+  });
 }
 
 function deleteComment(comment) {
@@ -115,7 +119,8 @@ function postComment() {
   const imgsrc = document.getElementById("modal-img").src;
   const splitimg = imgsrc.split("/");
   console.log(splitimg);
-  const img = splitimg[splitimg.length - 1];
+  const splitname = splitimg[splitimg.length - 1].split(".");
+  const img = splitname[0];
 
   const params = new URLSearchParams();
   params.append("name", nameElement.value);
