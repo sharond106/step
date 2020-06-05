@@ -55,12 +55,7 @@ function getServerData() {
   const sort = document.getElementById("sort").value;
   
   const imgsrc = document.getElementById("modal-img").src;
-  const splitimg = imgsrc.split("/");
-  console.log(splitimg);
-  // Get image file name in img tag's src field (ex: flowers.jpg)
-  const splitname = splitimg[splitimg.length - 1].split(".");
-  // Get string before file format string (remove .jpg)
-  const img = splitname[0];
+  const img = getImgName(imgsrc);
 
   console.log(sort);
   console.log(maxToDisplay);
@@ -118,14 +113,12 @@ function postComment() {
   const commentElement = document.getElementById("comment-box");
   const imgsrc = document.getElementById("modal-img").src;
 
-  if (commentElement.value == null || commentElement.value == "" || imgsrc.value == null) {
+  if (!commentElement.value || !imgsrc) {
+    console.log("null comment or image src");
     return;
   }
 
-  const splitimg = imgsrc.split("/");
-  console.log(splitimg);
-  const splitname = splitimg[splitimg.length - 1].split(".");
-  const img = splitname[0];
+  const img = getImgName(imgsrc);
 
   const params = new URLSearchParams();
   params.append("name", nameElement.value);
@@ -138,4 +131,21 @@ function postComment() {
   commentElement.value = "";
 
   fetch(postRequest).then(() => getServerData()).catch(error => console.error(error));
+}
+
+function getImgName(imgsrc) {
+  console.log("Getting image name");
+  const splitimg = imgsrc.split("/");
+
+  // Get image file name in img tag's src field (ex: flowers.jpg)
+  if (splitimg.length == 0) {
+    return "";
+  }
+  const splitname = splitimg[splitimg.length - 1].split(".");
+  
+  // Get string before file format string (remove .jpg)
+  if (splitname.length > 0) {
+    return splitname[0];
+  }
+  return "";
 }
