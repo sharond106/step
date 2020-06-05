@@ -35,14 +35,18 @@ import java.util.ArrayList;
 @WebServlet("/comment")
 public class DataServlet extends HttpServlet {
 
+  private enum Sort { NEW, OLD, NULL }
+  
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String sort = request.getParameter("sort");
+    Sort sort = Sort.valueOf(request.getParameter("sort").toUpperCase());
     String imgRequest = request.getParameter("img");
 
     // Sort comments according to request parameter
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
-    if (sort != null && sort.equals("old")) {
+    Query query;
+    if (sort == Sort.NULL || sort == Sort.NEW) {
+      query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    } else {
       query = new Query("Comment").addSort("timestamp", SortDirection.ASCENDING);
     }
 
