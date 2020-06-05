@@ -80,7 +80,8 @@ function getServerData() {
       const listElement = document.createElement("li");
 
       const textElement = document.createElement("span");
-      textElement.innerHTML = comment.name + "<br><br>" + comment.comment;
+      const date = new Date(comment.timestamp);
+      textElement.innerHTML = comment.name + " " + date.toLocaleString() + "<br><br>" + comment.comment;
 
       const deleteButtonElement = document.createElement("button");
       deleteButtonElement.className = "delete-button";
