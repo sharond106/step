@@ -117,6 +117,11 @@ function postComment() {
   const nameElement = document.getElementById("name");
   const commentElement = document.getElementById("comment-box");
   const imgsrc = document.getElementById("modal-img").src;
+
+  if (commentElement.value == null || commentElement.value == "" || imgsrc.value == null) {
+    return;
+  }
+
   const splitimg = imgsrc.split("/");
   console.log(splitimg);
   const splitname = splitimg[splitimg.length - 1].split(".");

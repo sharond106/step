@@ -91,8 +91,8 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = request.getParameter("comment");
-    String name = getParameter(request, "name", "");
-    String img = getParameter(request, "img", "");
+    String name = request.getParameter("name");
+    String img = request.getParameter("img");
     long timestamp = System.currentTimeMillis();
 
     if (comment == null || comment.length() == 0) {
@@ -110,13 +110,5 @@ public class DataServlet extends HttpServlet {
     datastore.put(commentEntity);
     
     response.sendRedirect("/pics.html");
-  }
-
-  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
-    String value = request.getParameter(name);
-    if (value == null) {
-      return defaultValue;
-    }
-    return value;
   }
 }
