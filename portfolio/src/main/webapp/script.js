@@ -81,7 +81,7 @@ function getServerData() {
 
       const textElement = document.createElement("span");
       const date = new Date(comment.timestamp);
-      textElement.innerHTML = comment.name + " " + date.toLocaleString() + "<br><br>" + comment.comment;
+      textElement.innerHTML = "<b>" + comment.name + "</b>    <small>" + date.toLocaleString() + "</small><br><br>" + comment.comment;
 
       const deleteButtonElement = document.createElement("button");
       deleteButtonElement.className = "delete-button";
