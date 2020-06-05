@@ -100,11 +100,6 @@ public class DataServlet extends HttpServlet {
     String img = request.getParameter("img");
     long timestamp = System.currentTimeMillis();
 
-    if (comment == null || comment.length() == 0) {
-      response.sendRedirect("/pics.html");
-      return;
-    }
-
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("name", name);

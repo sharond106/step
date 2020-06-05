@@ -50,26 +50,23 @@ function closeModal() {
 // Request content from server
 function getServerData() {
   console.log("Fetching data.");
+
+  // Get user's values from the html document
   const maxElement = document.getElementById("quantity");
   const maxToDisplay = maxElement.value;
   const sort = document.getElementById("sort").value;
-  
   const imgsrc = document.getElementById("modal-img").src;
   const img = getImgName(imgsrc);
-
-  console.log(sort);
-  console.log(maxToDisplay);
   
   fetch("/comment?quantity=" + maxToDisplay + "&sort=" + sort + "&img=" + img).then(response => response.json()).then(jsonObj => {
     const comments = jsonObj.comments;
-    console.log(comments[comments.length - 1]);
     const total = jsonObj.total;
-    console.log(total);
 
+    // Display the total number of comments to user
     const totalElement = document.getElementById("total");
     totalElement.innerText = ("Comments (" + total + ")");
 
-    // Set maximum number of comments to show as the total number of comments (returned from fetch)
+    // Make sure user can't try to display more than the total number of comments
     maxElement.max = total.toString();
     maxElement.placeholder = total.toString();
 
@@ -78,11 +75,13 @@ function getServerData() {
     list.innerHTML = "";
     comments.forEach((comment) => {
       const listElement = document.createElement("li");
-
+      
+      // Display name, date, and comment
       const textElement = document.createElement("span");
       const date = new Date(comment.timestamp);
       textElement.innerHTML = "<b>" + comment.name + "</b>    <small>" + date.toLocaleString() + "</small><br><br>" + comment.comment;
 
+      // Display a delete button
       const deleteButtonElement = document.createElement("button");
       deleteButtonElement.className = "delete-button";
       deleteButtonElement.innerText = "Delete";
@@ -98,6 +97,7 @@ function getServerData() {
   });
 }
 
+// Create POST request to /delete servlet to delete comment, called by delete button onclick
 function deleteComment(comment) {
   console.log("Deleting comment");
 
@@ -107,18 +107,22 @@ function deleteComment(comment) {
   fetch(postRequest).then(() => getServerData()).catch(error => console.error(error));
 }
 
+// Create POST request to /comment servlet
 function postComment() {
   console.log("Posting comment");
 
+  // Get user's values 
   const nameElement = document.getElementById("name");
   const commentElement = document.getElementById("comment-box");
   const imgsrc = document.getElementById("modal-img").src;
 
+  // Don't create comment if the comment is empty or the image has no src
   if (!commentElement.value || !imgsrc) {
     console.log("null comment or image src");
     return;
   }
 
+  // Get image name that comment is under
   const img = getImgName(imgsrc);
 
   const params = new URLSearchParams();
@@ -134,6 +138,7 @@ function postComment() {
   fetch(postRequest).then(() => getServerData()).catch(error => console.error(error));
 }
 
+// Extracts image name from the src
 function getImgName(imgsrc) {
   console.log("Getting image name");
   const splitimg = imgsrc.split("/");
