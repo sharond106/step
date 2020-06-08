@@ -36,7 +36,8 @@ function showModal(img) {
   const modalCaption = document.getElementById("caption");
   modal.style.display = "block";
   modalImg.src = img.src;
-  modalCaption.innerHTML = img.alt;
+  modalCaption.innerHTML = img.alt + "  " +  
+    "<button onclick=\"window.location.href='#comments-container';\" id=\"to-comments\" name=\"to-comments\"><small>See comments.</small></button>";
   getServerData();
 }
 
