@@ -40,14 +40,14 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Sort sort = Sort.valueOf(request.getParameter("sort").toUpperCase());
-    String imgRequest = request.getParameter("img");
+    String img = request.getParameter("img");
 
     // Sort comments according to request parameter
     Query query;
     if (sort == Sort.NULL || sort == Sort.NEW) {
-      query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+      query = new Query("Comment-" + img).addSort("timestamp", SortDirection.DESCENDING);
     } else {
-      query = new Query("Comment").addSort("timestamp", SortDirection.ASCENDING);
+      query = new Query("Comment-" + img).addSort("timestamp", SortDirection.ASCENDING);
     }
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -65,34 +65,23 @@ public class DataServlet extends HttpServlet {
 
     // Comment objects added to comments ArrayList will be displayed
     ArrayList<Comment> comments = new ArrayList<Comment>();
-    // count variable is the total number of comments linked with the current img
-    int count = 0;
-    // Iterating over all comments with various img tags
     for (Entity entity : results.asIterable()) {
-      String img = (String) entity.getProperty("img");
-
-      // Only add the comment if it's linked with the current img
-      if (img.equals(imgRequest)) {
-        long id = entity.getKey().getId();  
-        String name = (String) entity.getProperty("name");
-        String comment = (String) entity.getProperty("comment");
-        long timestamp = (long) entity.getProperty("timestamp");
+      long id = entity.getKey().getId();  
+      String name = (String) entity.getProperty("name");
+      String comment = (String) entity.getProperty("comment");
+      long timestamp = (long) entity.getProperty("timestamp");
         
-        Comment newComment = new Comment(id, name, comment, timestamp, img);
-        count++;
-        /* Don't add to comments to display list if the number of comments linked with the current img (count) 
-        is > the max number of comments the user wants to show (max). Keep iterating through the rest of the results, 
-        in case there are more comments linked with the current img tag, to correctly count the total (count).
-        */
-        if (count <= max) {
-            comments.add(newComment);
-        }
+      Comment newComment = new Comment(id, name, comment, timestamp, img);
+      comments.add(newComment);
+      
+      if (comments.size() >= max) {
+        break;
       }
     }
     
     // Create json String with a "comments" object and a "total" object to print to /comments
     Gson gson = new Gson();
-    String json = String.format("{\"comments\": %s, \"total\": %s}", gson.toJson(comments), count);
+    String json = String.format("{\"comments\": %s, \"total\": %s}", gson.toJson(comments), comments.size());
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
@@ -105,7 +94,7 @@ public class DataServlet extends HttpServlet {
     String img = request.getParameter("img");
     long timestamp = System.currentTimeMillis();
 
-    Entity commentEntity = new Entity("Comment");
+    Entity commentEntity = new Entity("Comment-" + img);
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("img", img);
