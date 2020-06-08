@@ -128,10 +128,14 @@ function postComment() {
   const imgsrc = document.getElementById("modal-img").src;
 
   // Don't create comment if the comment is empty or the image has no src
-  if (!commentElement.value || !imgsrc) {
-    console.log("null comment or image src");
+  if (!commentElement.value) {
+    alert("Comment cannot be empty");
     return;
   }
+  if (!imgsrc) {
+    return;
+  }
+
   const img = getImgName(imgsrc);
   if (img == "") {
     console.log("invalid img src");
