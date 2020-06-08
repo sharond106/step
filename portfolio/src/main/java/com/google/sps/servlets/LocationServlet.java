@@ -35,21 +35,44 @@ public class LocationServlet extends HttpServlet {
   public void init() {
     locations = new ArrayList<>();
 
+    // Parse csv file organized by name, description, latitude, longitude
     Scanner scanner = new Scanner(getServletContext().getResourceAsStream("/WEB-INF/locations.csv"));
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
       String[] cells = line.split(",");
       
+      // Skip this line if there are an incorrect number of values
+      if (cells.length != 4) {
+        break;
+      }
+
       String name = cells[0];
       String description = cells[1];
-      double lat = Double.parseDouble(cells[2]);
-      double lng = Double.parseDouble(cells[3]);
 
+      Double lat = parseForDouble(cells[2]);
+      Double lng = parseForDouble(cells[3]);
+      
+      // Skip this line if latitude / longitude are invalid
+      if (lat == null || lng == null) {
+        continue;
+      }
       locations.add(new Location(name, description, lat, lng));
     }
     scanner.close();
   }
 
+  // Returns parameter as a double
+  public Double parseForDouble(String value) {
+    try {
+      Double num = Double.parseDouble(value);
+      return num;
+    } catch (Exception e) { 
+      System.out.println("Exception: " + e); 
+      return null;
+    }
+  }
+  
+  // Print locations ArrayList as a json object to /locations address 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
