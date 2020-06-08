@@ -47,7 +47,7 @@ function closeModal() {
   maxElement.value = "";
 }
 
-// Request content from server
+// Create GET request to /comment servlet
 function getServerData() {
   console.log("Fetching data.");
 
@@ -167,3 +167,43 @@ function getImgName(imgsrc) {
   }
   return "";
 }
+
+// Create the script tag for map api and set the appropriate attributes
+var script = document.createElement("script");
+script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAy6bZSEG3FN2VdsI8vRcnyew6kt6BTsCg&callback=initMap";
+script.defer = true;
+script.async = true;
+
+
+// Attach callback function to display map to the `window` object
+window.initMap = function() {
+  // JS API is loaded and available
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: {lat: 39, lng: -39},
+    zoom: 3
+  });
+  
+  var contentString ="<div id=\"place\"><p>Pittsburgh</p><small>My home city</small></div>";
+
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+
+  var marker = new google.maps.Marker({
+    position: {lat: 40.439709, lng: -79.9959},
+    map: map
+  });
+  marker.addListener("click", function() {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    infowindow.open(map, marker);
+    window.setTimeout(function() {marker.setAnimation(null)}, 2000);
+  });
+};
+
+// Add location markers to map
+function addMarkers(locations) {
+
+} 
+
+// Append the 'script' element to 'head'
+document.head.appendChild(script);

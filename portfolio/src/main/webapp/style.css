@@ -414,3 +414,10 @@ label {
 .delete-button {
   float: right;
 }
+
+#map {
+  border: thin solid black;
+  height: 500px;
+  margin: auto;
+  width: 1000px;
+}
