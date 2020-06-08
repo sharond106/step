@@ -103,7 +103,7 @@ function getServerData() {
       listElement.appendChild(textElement);
       listElement.appendChild(deleteButtonElement);
       list.append(listElement);
-    })
+    });
   });
 }
 
@@ -169,11 +169,10 @@ function getImgName(imgsrc) {
 }
 
 // Create the script tag for map api and set the appropriate attributes
-var script = document.createElement("script");
-script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAy6bZSEG3FN2VdsI8vRcnyew6kt6BTsCg&callback=initMap";
-script.defer = true;
-script.async = true;
-
+var mapscript = document.createElement("script");
+mapscript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAy6bZSEG3FN2VdsI8vRcnyew6kt6BTsCg&callback=initMap";
+mapscript.defer = true;
+mapscript.async = true;
 
 // Attach callback function to display map to the `window` object
 window.initMap = function() {
@@ -182,28 +181,38 @@ window.initMap = function() {
     center: {lat: 39, lng: -39},
     zoom: 3
   });
-  
-  var contentString ="<div id=\"place\"><p>Pittsburgh</p><small>My home city</small></div>";
 
-  var infowindow = new google.maps.InfoWindow({
-    content: contentString
+  // Get location data from server
+  showLocations(map);
+};
+
+// Create GET request to /location servlet for map data
+function showLocations(map) {
+  fetch("/location").then(response => response.json()).then(locations => {
+    locations.forEach(location => {
+      createMarker(map, location);
+    });
   });
+}
 
+// Create marker icon for location parameter on map
+function createMarker(map, location) {
+  // Create pop up window for location with name and description
+  var infowindow = new google.maps.InfoWindow({
+    content: "<div id=\"place\"><p>" + location.name + "</p><small>" + location.description + "</small></div>"
+  });
+  // Create marker at the location's latitude and longitude
   var marker = new google.maps.Marker({
-    position: {lat: 40.439709, lng: -79.9959},
+    position: {lat: location.latitude, lng: location.longitude},
     map: map
   });
+  // Create a bounce animation for 2 seconds, and show info window when marker is clicked on
   marker.addListener("click", function() {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     infowindow.open(map, marker);
     window.setTimeout(function() {marker.setAnimation(null)}, 2000);
   });
-};
+}
 
-// Add location markers to map
-function addMarkers(locations) {
-
-} 
-
-// Append the 'script' element to 'head'
-document.head.appendChild(script);
+// Append the "mapscript" element to "head"
+document.head.appendChild(mapscript);
