@@ -57,11 +57,10 @@ public class DataServlet extends HttpServlet {
 
     // Set the number of comments to print (max)
     String quantity = request.getParameter("quantity");
-    int max = -1;
+    int max = numComments;
+    // Making sure the number of comments (if given) is greater than 0 and less than the number of total comments
     if (quantity != null && quantity.length() > 0 && Integer.parseInt(quantity) <= numComments) {
       max = Integer.parseInt(quantity);
-    } else {
-      max = numComments;
     }
 
     // Comment objects added to comments ArrayList will be displayed
