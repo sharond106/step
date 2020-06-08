@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList; 
 
-/** Servlet responsible for handling comments data */
+/** Servlet responsible for listing and adding comments data */
 @WebServlet("/comment")
 public class DataServlet extends HttpServlet {
 
