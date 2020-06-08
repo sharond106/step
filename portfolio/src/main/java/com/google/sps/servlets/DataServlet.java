@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList; 
 
-// Servlet responsible for handling comments data 
+/** Servlet responsible for handling comments data */
 @WebServlet("/comment")
 public class DataServlet extends HttpServlet {
 
@@ -64,9 +64,11 @@ public class DataServlet extends HttpServlet {
       max = numComments;
     }
 
-    // Create Comment objects and add to comments ArrayList
+    // Comment objects added to comments ArrayList will be displayed
     ArrayList<Comment> comments = new ArrayList<Comment>();
+    // count variable is the total number of comments linked with the current img
     int count = 0;
+    // Iterating over all comments with various img tags
     for (Entity entity : results.asIterable()) {
       String img = (String) entity.getProperty("img");
 
@@ -79,13 +81,17 @@ public class DataServlet extends HttpServlet {
         
         Comment newComment = new Comment(id, name, comment, timestamp, img);
         count++;
+        /* Don't add to comments to display list if the number of comments linked with the current img (count) 
+        is > the max number of comments the user wants to show (max). Keep iterating through the rest of the results, 
+        in case there are more comments linked with the current img tag, to correctly count the total (count).
+        */
         if (count <= max) {
             comments.add(newComment);
         }
       }
     }
     
-    // Create json String to print to /comments
+    // Create json String with a "comments" object and a "total" object to print to /comments
     Gson gson = new Gson();
     String json = String.format("{\"comments\": %s, \"total\": %s}", gson.toJson(comments), count);
 

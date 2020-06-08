@@ -56,8 +56,18 @@ function getServerData() {
   const maxToDisplay = maxElement.value;
   const sort = document.getElementById("sort").value;
   const imgsrc = document.getElementById("modal-img").src;
-  const img = getImgName(imgsrc);
   
+  // Don't get comments if the image has no value
+  if (!imgsrc) {
+    console.log("null image src");
+    return;
+  }
+  const img = getImgName(imgsrc);
+  if (img == "") {
+    console.log("invalid img src");
+    return;
+  }
+
   fetch("/comment?quantity=" + maxToDisplay + "&sort=" + sort + "&img=" + img).then(response => response.json()).then(jsonObj => {
     const comments = jsonObj.comments;
     const total = jsonObj.total;
@@ -121,9 +131,11 @@ function postComment() {
     console.log("null comment or image src");
     return;
   }
-
-  // Get image name that comment is under
   const img = getImgName(imgsrc);
+  if (img == "") {
+    console.log("invalid img src");
+    return;
+  }
 
   const params = new URLSearchParams();
   params.append("name", nameElement.value);
