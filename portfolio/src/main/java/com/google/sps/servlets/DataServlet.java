@@ -66,6 +66,9 @@ public class DataServlet extends HttpServlet {
     // Comment objects added to comments ArrayList will be displayed
     ArrayList<Comment> comments = new ArrayList<Comment>();
     for (Entity entity : results.asIterable()) {
+      if (comments.size() >= max) {
+        break;
+      }       
       long id = entity.getKey().getId();  
       String name = (String) entity.getProperty("name");
       String comment = (String) entity.getProperty("comment");
@@ -73,10 +76,6 @@ public class DataServlet extends HttpServlet {
         
       Comment newComment = new Comment(id, name, comment, timestamp, img);
       comments.add(newComment);
-      
-      if (comments.size() >= max) {
-        break;
-      }
     }
     
     // Create json String with a "comments" object and a "total" object to print to /comments

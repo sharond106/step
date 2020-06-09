@@ -132,9 +132,6 @@ function postComment() {
     alert("Comment cannot be empty");
     return;
   }
-  if (!imgsrc) {
-    return;
-  }
 
   const img = getImgName(imgsrc);
   if (img == "") {
