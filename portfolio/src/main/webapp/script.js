@@ -200,15 +200,17 @@ function showLocations(map) {
 
 // Create marker icon for location parameter on map
 function createMarker(map, location) {
-  // Create pop up window for location with name and description
+  const infowindowNode = createInfowindowNode(location);
   var infowindow = new google.maps.InfoWindow({
-    content: "<div id=\"place\"><p>" + location.name + "</p><small>" + location.description + "</small></div>"
+    content: infowindowNode
   });
+
   // Create marker at the location's latitude and longitude
   var marker = new google.maps.Marker({
     position: {lat: location.latitude, lng: location.longitude},
     map: map
   });
+
   // Create a bounce animation for 2 seconds, and show info window when marker is clicked on
   marker.addListener("click", function() {
     marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -216,6 +218,30 @@ function createMarker(map, location) {
     var animationDuration = 2000;   // in milliseconds
     window.setTimeout(function() {marker.setAnimation(null)}, animationDuration);
   });
+}
+
+// Create infowindow with text and filter button for location parameter
+function createInfowindowNode(location) {
+  const infowindowNode = document.createElement("span");
+  infowindowNode.innerHTML = "<div id=\"place\"><p>" + location.name + "</p><small>" + location.description + "</small></div>";
+  
+  // Create button to filter images by location.name
+  const filterButton = document.createElement("button");
+  filterButton.innerText = "Filter images";
+  filterButton.id = "filter-button";
+  filterButton.addEventListener("click", () => {
+    console.log("Filter button clicked");
+    filter(location.name);
+  });
+
+  infowindowNode.append(filterButton);
+  return infowindowNode;    
+}
+
+// Displays images stored in filter_pics.html at parameter location
+function filter(location) {
+  console.log("filtering: " + location);
+  $("#images").load("filter_pics.html #" + location);
 }
 
 // Append the "mapscript" element to "head"

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Pictures</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Work Sans" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css?family=Work Sans" rel="stylesheet"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     <script src="script.js"></script>
   </head>
   <body>
@@ -46,36 +47,8 @@
       </div>
       <br><br><br>
     </div>
-    <div class="images-row">
-      <div class="images-col">
-        <img src="images/me.jpg" alt="At Pulpit Rock in Norway." onclick="showModal(this)">
-        <img src="images/canals.jpg" alt="Copenhagen, Denmark." onclick="showModal(this)">
-        <img src="images/purpleflowers.jpg" alt="Flowers in my garden at home." onclick="showModal(this)">
-        <img src="images/winter.jpg" alt="Snowy day at North Park." onclick="showModal(this)">
-        <img src="images/jason.png" alt="School dance with my favorite person." onclick="showModal(this)"> 
-        <img src="images/temple.jpg" alt="Temple in Shanghai, China." onclick="showModal(this)">
-        <img src="images/lamb.jpg" alt="Memorial day cookout." onclick="showModal(this)">
-      </div>
-      <div class="images-col">
-        <img src="images/strawberries.jpg" alt="Strawberry picking at a local farm." onclick="showModal(this)">
-        <img src="images/family.jpg" alt="My family on our Scandinavia vacation." onclick="showModal(this)">
-        <img src="images/sunset.jpg" alt="Sunset at North Park." onclick="showModal(this)">
-        <img src="images/may.jpg" alt="Christmas downtown with my best friend." onclick="showModal(this)">
-        <img src="images/plane.jpg" alt="On the way to Denmark, Norway." onclick="showModal(this)">
-        <img src="images/portugal.jpg" alt="Porto, Portugal." onclick="showModal(this)">
-        <img src="images/shanghai.jpg" alt="Garden in Shanghai, China." onclick="showModal(this)">
-      </div>
-      <div class="images-col">
-        <img src="images/hike2.jpg" alt="Hiking Pulpit Rock in Norway." onclick="showModal(this)">
-        <img src="images/sis.JPG" alt="My sister and me." onclick="showModal(this)">
-        <img src="images/fireworks.jpg" alt="Fireworks on the Fourth atop Mount Washington." onclick="showModal(this)">
-        <img src="images/caro.jpg" alt="College roomie and bestie." onclick="showModal(this)">
-        <img src="images/castle.jpg" alt="Castelo dos Mouros in Sintra, Portugal." onclick="showModal(this)">
-        <img src="images/bean.jpg" alt="Chicago bean." onclick="showModal(this)">
-        <img src="images/grad.jpg" alt="High school graduation." onclick="showModal(this)">
-        <img src="images/cookies.jpg" alt="Some Christmas cookies." onclick="showModal(this)">
-      </div>
-    </div>
+    <div id="images"></div>
+    <script>filter("all");</script>
     <button onclick="topFunction()" id="to-top-btn" title="Go to top"> ^ </button>
     <script>scrollFunction();</script>
   </body>

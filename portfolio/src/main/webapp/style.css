@@ -329,6 +329,11 @@ th {
   }
 }
 
+#filter-button {
+  font-size: 12px;
+  padding: 5px 11px;
+}
+
 /* Close button */
 .close {
   color: #f1f1f1;
