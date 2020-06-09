@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  font-family: 'Work Sans';
+  font-family: "Work Sans";
   height: 100%;
   margin: 0;
 }
@@ -262,7 +262,7 @@ th {
 }
 
 .images-col img:hover {
-  opacity: 0.7;
+  opacity: .7;
 }
 
 @media screen and (max-width: 600px) {
@@ -286,6 +286,7 @@ th {
   overflow: auto; 
   padding: 3% 0; 
   position: fixed; 
+  scroll-behavior: smooth;
   top: 0;
   width: 100%; 
   z-index: 1; 
@@ -310,6 +311,11 @@ th {
 .modal-content, #caption {
   animation-duration: .6s;
   animation-name: zoom;
+}
+
+#to-comments {
+  display: inline-block;
+  padding: 5px 11px;
 }
 
 @keyframes zoom {
@@ -345,4 +351,72 @@ th {
   color: #bbb;
   cursor: pointer;
   text-decoration: none;
+}
+
+/* Comments */
+#comments-container {
+  color: white;
+  margin: auto;
+  width: 60%;
+}
+
+#all-comments {
+  border-bottom: 1px solid #cec6e3;
+  list-style: none;
+  padding: 0;
+}
+
+#all-comments li {
+  border-top: 1px solid #cec6e3;
+  font-family: "Work Sans";
+  font-size: 20px;
+  list-style-position:inside;
+  margin: 40px auto;
+  padding: 12px 20px;
+}
+
+#quantity,
+#sort {
+  font-family: "Work Sans";
+  font-size: 20px;
+  text-align: center;
+}
+
+.input-box {
+  background: lavender;
+  font-family: "Work Sans";
+  font-size: 20px;
+  margin: 8px auto;
+  opacity: .85;
+  padding: 12px 20px;
+  width: 100%;
+}
+
+#comment-box {
+  height: 150px;
+}
+
+button,
+input[type=submit] {
+  background-color: lavender;
+  border: none;
+  cursor: pointer;
+  font-family: "Work Sans";
+  font-size: 20px;
+  margin: 4px 2px;
+  padding: 10px 22px;
+}
+
+button:hover,
+input[type=submit]:hover {
+  opacity: .7;
+}
+
+label {
+  font-family: "Work Sans";
+  font-size: 20px;
+}
+
+.delete-button {
+  float: right;
 }

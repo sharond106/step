@@ -2,12 +2,11 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Projects</title>
+    <title>Pictures</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Work Sans" rel="stylesheet">  
     <script src="script.js"></script>
   </head>
-  
   <body>
     <div class="topnav">
       <div class="topnav-left">
@@ -27,8 +26,23 @@
       <span class="close" onclick="closeModal()">&times;</span>
       <img alt="Image modal" class="modal-content" id="modal-img">
       <br><br>
-      <div id="caption"></div>
-      <br><br>
+      <div for="to-comments" id="caption"></div>
+      <br><br><br>
+      <div id="comments-container">
+        <h2 id="total">Comments</h2>
+        <label for="quantity">Maximum number to display:</label>
+        <input type="number" id="quantity" name="quantity" min="1" max="5" onchange="getServerData()">
+        <label for="sort">Sort order:</label>
+        <select name="sort" id="sort" onchange="getServerData()">
+            <option value="new">Newest to Oldest</option>
+            <option value="old">Oldest to Newest</option>
+        </select>
+        <textarea name="comment" class="input-box" id="comment-box" placeholder="Comment"></textarea><br>
+        <input type="text" name="name" class="input-box" id="name" placeholder="Name">
+        <button id="post-button" onclick="postComment()">Post</button>
+        <ul id="all-comments"></ul>
+      </div>
+      <br><br><br>
     </div>
     <div class="images-row">
       <div class="images-col">
