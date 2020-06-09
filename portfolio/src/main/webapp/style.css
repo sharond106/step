@@ -286,6 +286,7 @@ th {
   overflow: auto; 
   padding: 3% 0; 
   position: fixed; 
+  scroll-behavior: smooth;
   top: 0;
   width: 100%; 
   z-index: 1; 
@@ -310,6 +311,11 @@ th {
 .modal-content, #caption {
   animation-duration: .6s;
   animation-name: zoom;
+}
+
+#to-comments {
+  display: inline-block;
+  padding: 5px 11px;
 }
 
 @keyframes zoom {

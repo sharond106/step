@@ -36,7 +36,8 @@ function showModal(img) {
   const modalCaption = document.getElementById("caption");
   modal.style.display = "block";
   modalImg.src = img.src;
-  modalCaption.innerHTML = img.alt;
+  modalCaption.innerHTML = img.alt + "  " +  
+    "<button onclick=\"window.location.href='#comments-container';\" id=\"to-comments\" name=\"to-comments\"><small>See comments.</small></button>";
   getServerData();
 }
 
@@ -127,10 +128,11 @@ function postComment() {
   const imgsrc = document.getElementById("modal-img").src;
 
   // Don't create comment if the comment is empty or the image has no src
-  if (!commentElement.value || !imgsrc) {
-    console.log("null comment or image src");
+  if (!commentElement.value) {
+    alert("Comment cannot be empty");
     return;
   }
+
   const img = getImgName(imgsrc);
   if (img == "") {
     console.log("invalid img src");
