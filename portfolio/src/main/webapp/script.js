@@ -176,10 +176,13 @@ mapscript.async = true;
 
 // Attach callback function to display map to the `window` object
 window.initMap = function() {
-  // JS API is loaded and available
+  // Default map is centered at the middle of the Atlantic Ocean and zoomed to display the US and half of Europe
+  var centeredLat = 39;
+  var centeredLng = -39;
+  var defaultZoom = 3;
   const map = new google.maps.Map(document.getElementById("map"), {
-    center: {lat: 39, lng: -39},
-    zoom: 3
+    center: {lat: centeredLat, lng: centeredLng},
+    zoom: defaultZoom
   });
 
   // Get location data from server
@@ -210,7 +213,8 @@ function createMarker(map, location) {
   marker.addListener("click", function() {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     infowindow.open(map, marker);
-    window.setTimeout(function() {marker.setAnimation(null)}, 2000);
+    var animationDuration = 2000;   // in milliseconds
+    window.setTimeout(function() {marker.setAnimation(null)}, animationDuration);
   });
 }
 

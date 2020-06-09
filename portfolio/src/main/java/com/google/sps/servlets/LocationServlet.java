@@ -36,19 +36,19 @@ public class LocationServlet extends HttpServlet {
     locations = new ArrayList<>();
 
     // Parse csv file organized by name, description, latitude, longitude
-    Scanner scanner = new Scanner(getServletContext().getResourceAsStream("/WEB-INF/locations.csv"));
-    while (scanner.hasNextLine()) {
-      String line = scanner.nextLine();
+    Scanner locationData = new Scanner(getServletContext().getResourceAsStream("/WEB-INF/locations.csv"));
+    while (locationData.hasNextLine()) {
+      String line = locationData.nextLine();
       String[] cells = line.split(",");
       
       // Skip this line if there are an incorrect number of values
       if (cells.length != 4) {
-        break;
+        continue;
       }
 
       String name = cells[0];
       String description = cells[1];
-
+    
       Double lat = parseForDouble(cells[2]);
       Double lng = parseForDouble(cells[3]);
       
@@ -58,7 +58,7 @@ public class LocationServlet extends HttpServlet {
       }
       locations.add(new Location(name, description, lat, lng));
     }
-    scanner.close();
+    locationData.close();
   }
 
   // Returns parameter as a double
@@ -66,6 +66,9 @@ public class LocationServlet extends HttpServlet {
     try {
       Double num = Double.parseDouble(value);
       return num;
+    } catch (NumberFormatException e) { 
+      System.out.println("NumberFormatException"); 
+      return null;
     } catch (Exception e) { 
       System.out.println("Exception: " + e); 
       return null;
