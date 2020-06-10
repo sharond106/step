@@ -75,6 +75,8 @@ public class FileUploadServlet extends HttpServlet {
       return url.getPath();
     } catch (MalformedURLException e) {
       return imagesService.getServingUrl(options);
+    } catch (Exception e) {
+      return null;
     }
   }
 }
