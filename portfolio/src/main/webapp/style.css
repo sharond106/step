@@ -426,3 +426,24 @@ label {
   margin: auto;
   width: 1000px;
 }
+
+/* Image Uploads */
+#uploads {
+  border-bottom: 1px solid #cec6e3;
+  list-style: none;
+  padding: 0;
+}
+
+#uploads li {
+  border-top: 1px solid #cec6e3;
+  font-family: "Work Sans";
+  font-size: 20px;
+  list-style-position:inside;
+  margin: 40px auto;
+  overflow: auto;
+  padding: 12px 20px;
+}
+
+#uploads li span {
+  margin: 40px;
+}

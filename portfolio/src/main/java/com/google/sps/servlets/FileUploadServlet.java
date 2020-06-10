@@ -87,7 +87,9 @@ public class FileUploadServlet extends HttpServlet {
 
     if (imageUrl == null) {
       response.sendRedirect("/upload.jsp");
+      return;
     }
+
     Entity fileEntity = new Entity("File");
     fileEntity.setProperty("url", imageUrl);
     fileEntity.setProperty("caption", message);

@@ -257,14 +257,14 @@ function showFiles() {
     files.forEach((file) => { 
       const listElement = document.createElement("li");
 
-      // Display image
+      // Display image, which always needs to be rotated 90 degrees for the correct orientation
       const imgElement = document.createElement("img");
       imgElement.src = file.url;
-      
+
       // Display caption and date
       const textElement = document.createElement("span");
       const date = new Date(file.timestamp);
-      textElement.innerHTML = "<b>" + file.caption + "</b>    <small>" + date.toLocaleString() + "</small><br><br>";
+      textElement.innerHTML = "<b>" + file.caption + "</b><small>    " + date.toLocaleString() + "</small><br><br>";
 
       listElement.appendChild(imgElement);
       listElement.appendChild(textElement);
