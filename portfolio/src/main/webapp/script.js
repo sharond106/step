@@ -246,3 +246,8 @@ function filter(location) {
 
 // Append the "mapscript" element to "head"
 document.head.appendChild(mapscript);
+
+function showFiles() {
+  console.log("showing files");
+  
+}

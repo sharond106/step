@@ -24,6 +24,9 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.images.ServingUrlOptions;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,9 +44,15 @@ import javax.servlet.http.HttpServletResponse;
 public class FileUploadServlet extends HttpServlet {
 
   @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query query = new Query("File").addSort("timestamp", SortDirection.DESCENDING);
+  }
+
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String message = request.getParameter("message");
     String imageUrl = getUploadedFileUrl(request, "image");
+    long timestamp = System.currentTimeMillis();
 
     // Output HTML for now
     PrintWriter out = response.getWriter();
@@ -58,6 +67,7 @@ public class FileUploadServlet extends HttpServlet {
     Entity fileEntity = new Entity("File");
     fileEntity.setProperty("url", imageUrl);
     fileEntity.setProperty("caption", message);
+    fileEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(fileEntity);

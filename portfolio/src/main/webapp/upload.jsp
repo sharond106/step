@@ -28,8 +28,9 @@ limitations under the License.
     <title>Upload</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Work Sans" rel="stylesheet"> 
+    <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="showFiles()">
     <div class="topnav">
       <div class="topnav-left">
         <a href="index.html">Sharon Dong</a>
@@ -49,6 +50,7 @@ limitations under the License.
         <br><br>
         <button>Submit</button>
       </form>
+      <ul id="uploads"></ul>
     </div>
   </body>
 </html>
