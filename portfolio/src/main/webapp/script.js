@@ -190,14 +190,13 @@ window.initMap = function () {
   var centeredLat = 39;
   var centeredLng = -39;
   var defaultZoom = 3;
-  console.log(style);
   const map = new google.maps.Map(document.getElementById("map"), {
     center: {
       lat: centeredLat,
       lng: centeredLng
     },
     zoom: defaultZoom,
-    styles: style
+    styles: style   // style object loaded from map_style.js
   });
   // Get location data from server
   showLocations(map);
