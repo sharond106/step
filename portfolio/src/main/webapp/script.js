@@ -14,11 +14,13 @@
 
 // Scroll to the top of the document
 function topFunction() {
-  document.documentElement.scrollTop = 0; 
+  document.documentElement.scrollTop = 0;
 }
 
 // When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollFunction()};
+window.onscroll = function () {
+  scrollFunction()
+};
 
 function scrollFunction() {
   const button = document.getElementById("to-top-btn");
@@ -36,7 +38,7 @@ function showModal(img) {
   const modalCaption = document.getElementById("caption");
   modal.style.display = "block";
   modalImg.src = img.src;
-  modalCaption.innerHTML = img.alt + "  " +  
+  modalCaption.innerHTML = img.alt + "  " +
     "<button onclick=\"window.location.href='#comments-container';\" id=\"to-comments\" name=\"to-comments\"><small>See comments.</small></button>";
   getServerData();
 }
@@ -57,7 +59,7 @@ function getServerData() {
   const maxToDisplay = maxElement.value;
   const sort = document.getElementById("sort").value;
   const imgsrc = document.getElementById("modal-img").src;
-  
+
   // Don't get comments if the image has no value
   if (!imgsrc) {
     console.log("null image src");
@@ -86,7 +88,7 @@ function getServerData() {
     list.innerHTML = "";
     comments.forEach((comment) => {
       const listElement = document.createElement("li");
-      
+
       // Display name, date, and comment
       const textElement = document.createElement("span");
       const date = new Date(comment.timestamp);
@@ -100,7 +102,7 @@ function getServerData() {
         console.log("Delete button clicked");
         deleteComment(comment);
       });
-      
+
       listElement.appendChild(textElement);
       listElement.appendChild(deleteButtonElement);
       list.append(listElement);
@@ -114,7 +116,10 @@ function deleteComment(comment) {
 
   const params = new URLSearchParams();
   params.append("id", comment.id);
-  const postRequest = new Request("/delete", {method: "POST", body: params});
+  const postRequest = new Request("/delete", {
+    method: "POST",
+    body: params
+  });
   fetch(postRequest).then(() => getServerData()).catch(error => console.error(error));
 }
 
@@ -143,7 +148,10 @@ function postComment() {
   params.append("name", nameElement.value);
   params.append("comment", commentElement.value);
   params.append("img", img);
-  const postRequest = new Request("/comment", {method: "POST", body: params});
+  const postRequest = new Request("/comment", {
+    method: "POST",
+    body: params
+  });
 
   // Reset textboxes 
   nameElement.value = "";
@@ -162,7 +170,7 @@ function getImgName(imgsrc) {
     return "";
   }
   const splitname = splitimg[splitimg.length - 1].split(".");
-  
+
   // Get string before file format string (remove .jpg)
   if (splitname.length > 0) {
     return splitname[0];
@@ -177,16 +185,142 @@ mapscript.defer = true;
 mapscript.async = true;
 
 // Attach callback function to display map to the `window` object
-window.initMap = function() {
+window.initMap = function () {
   // Default map is centered at the middle of the Atlantic Ocean and zoomed to display the US and half of Europe
   var centeredLat = 39;
   var centeredLng = -39;
   var defaultZoom = 3;
   const map = new google.maps.Map(document.getElementById("map"), {
-    center: {lat: centeredLat, lng: centeredLng},
-    zoom: defaultZoom
-  });
+    center: {
+      lat: centeredLat,
+      lng: centeredLng
+    },
+    zoom: defaultZoom,
+    styles: [{
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#f5f5f5"
+        }]
+      },
+      {
+        "elementType": "labels.icon",
+        "stylers": [{
+          "visibility": "off"
+        }]
+      },
+      {
+        "elementType": "labels.text.fill",
+        "stylers": [{
+          "color": "#616161"
+        }]
+      },
+      {
+        "elementType": "labels.text.stroke",
+        "stylers": [{
+          "color": "#f5f5f5"
+        }]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+          "color": "#bdbdbd"
+        }]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#eeeeee"
+        }]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+          "color": "#757575"
+        }]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#e5e5e5"
+        }]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+          "color": "#9e9e9e"
+        }]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#ffffff"
+        }]
+      },
+      {
+        "featureType": "road.arterial",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+          "color": "#757575"
+        }]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#dadada"
+        }]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+          "color": "#616161"
+        }]
+      },
+      {
+        "featureType": "road.local",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+          "color": "#9e9e9e"
+        }]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#e5e5e5"
+        }]
+      },
+      {
+        "featureType": "transit.station",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#eeeeee"
+        }]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [{
+          "color": "#c9c9c9"
+        }]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+          "color": "#9e9e9e"
+        }]
+      }
+    ]
 
+  });
   // Get location data from server
   showLocations(map);
 };
@@ -209,16 +343,21 @@ function createMarker(map, location) {
 
   // Create marker at the location's latitude and longitude
   var marker = new google.maps.Marker({
-    position: {lat: location.latitude, lng: location.longitude},
+    position: {
+      lat: location.latitude,
+      lng: location.longitude
+    },
     map: map
   });
 
   // Create a bounce animation for 2 seconds, and show info window when marker is clicked on
-  marker.addListener("click", function() {
+  marker.addListener("click", function () {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     infowindow.open(map, marker);
-    var animationDuration = 2000;   // in milliseconds
-    window.setTimeout(function() {marker.setAnimation(null)}, animationDuration);
+    var animationDuration = 2000; // in milliseconds
+    window.setTimeout(function () {
+      marker.setAnimation(null)
+    }, animationDuration);
   });
 }
 
@@ -226,7 +365,7 @@ function createMarker(map, location) {
 function createInfowindowNode(location) {
   const infowindowNode = document.createElement("span");
   infowindowNode.innerHTML = "<div id=\"place\"><p>" + location.name + "</p><small>" + location.description + "</small></div>";
-  
+
   // Create button to filter images by location.name
   const filterButton = document.createElement("button");
   filterButton.innerText = "Filter images";
@@ -237,7 +376,7 @@ function createInfowindowNode(location) {
   });
 
   infowindowNode.append(filterButton);
-  return infowindowNode;    
+  return infowindowNode;
 }
 
 // Displays images stored in filter_pics.html at parameter location
