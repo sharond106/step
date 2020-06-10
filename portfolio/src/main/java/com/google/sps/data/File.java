@@ -21,7 +21,7 @@ public class File {
   private final String caption;
   private final long timestamp;
 
-  public Comment(long id, String url, String caption, long timestamp) {
+  public File(long id, String url, String caption, long timestamp) {
     this.id = id;
     this.url = url;
     this.caption = caption;

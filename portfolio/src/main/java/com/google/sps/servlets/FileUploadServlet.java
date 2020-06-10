@@ -28,6 +28,8 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.images.ServingUrlOptions;
+import com.google.gson.Gson;
+import com.google.sps.data.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
@@ -38,6 +40,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList; 
 
 /** Servlet responsible for processing request with URL from Blobstore. */
 @WebServlet("/upload")
@@ -46,6 +49,27 @@ public class FileUploadServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("File").addSort("timestamp", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    // Add all file uploads to ArrayList
+    ArrayList<File> files = new ArrayList<File>();
+    for (Entity entity : results.asIterable()) {
+      long id = entity.getKey().getId();  
+      String url = (String) entity.getProperty("url");
+      String caption = (String) entity.getProperty("caption");
+      long timestamp = (long) entity.getProperty("timestamp");
+
+      File file = new File(id, url, caption, timestamp);
+      files.add(file);
+    }
+
+    // Create json String to print to /upload
+    Gson gson = new Gson();
+    String json = gson.toJson(files);
+    
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
   }
 
   @Override
