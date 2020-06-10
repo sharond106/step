@@ -19,6 +19,9 @@ import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
@@ -48,6 +51,18 @@ public class FileUploadServlet extends HttpServlet {
     out.println("<img src=\"" + imageUrl + "\" />");
     out.println("</a>");
     out.println(message);
+
+    if (imageUrl == null) {
+      response.sendRedirect("/upload.jsp");
+    }
+    Entity fileEntity = new Entity("File");
+    fileEntity.setProperty("url", imageUrl);
+    fileEntity.setProperty("caption", message);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(fileEntity);
+
+    response.sendRedirect("/upload.jsp");
   }
 
   // Returns a URL that points to the uploaded file, or null if the user didn't upload a file
