@@ -48,7 +48,7 @@ function closeModal() {
   maxElement.value = "";
 }
 
-// Request content from server
+// Create GET request to /comment servlet
 function getServerData() {
   console.log("Fetching data.");
 
@@ -104,7 +104,7 @@ function getServerData() {
       listElement.appendChild(textElement);
       listElement.appendChild(deleteButtonElement);
       list.append(listElement);
-    })
+    });
   });
 }
 
@@ -169,3 +169,82 @@ function getImgName(imgsrc) {
   }
   return "";
 }
+
+// Create the script tag for map api and set the appropriate attributes
+var mapscript = document.createElement("script");
+mapscript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAy6bZSEG3FN2VdsI8vRcnyew6kt6BTsCg&callback=initMap";
+mapscript.defer = true;
+mapscript.async = true;
+
+// Attach callback function to display map to the `window` object
+window.initMap = function() {
+  // Default map is centered at the middle of the Atlantic Ocean and zoomed to display the US and half of Europe
+  var centeredLat = 39;
+  var centeredLng = -39;
+  var defaultZoom = 3;
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: {lat: centeredLat, lng: centeredLng},
+    zoom: defaultZoom
+  });
+
+  // Get location data from server
+  showLocations(map);
+};
+
+// Create GET request to /location servlet for map data
+function showLocations(map) {
+  fetch("/location").then(response => response.json()).then(locations => {
+    locations.forEach(location => {
+      createMarker(map, location);
+    });
+  });
+}
+
+// Create marker icon for location parameter on map
+function createMarker(map, location) {
+  const infowindowNode = createInfowindowNode(location);
+  var infowindow = new google.maps.InfoWindow({
+    content: infowindowNode
+  });
+
+  // Create marker at the location's latitude and longitude
+  var marker = new google.maps.Marker({
+    position: {lat: location.latitude, lng: location.longitude},
+    map: map
+  });
+
+  // Create a bounce animation for 2 seconds, and show info window when marker is clicked on
+  marker.addListener("click", function() {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    infowindow.open(map, marker);
+    var animationDuration = 2000;   // in milliseconds
+    window.setTimeout(function() {marker.setAnimation(null)}, animationDuration);
+  });
+}
+
+// Create infowindow with text and filter button for location parameter
+function createInfowindowNode(location) {
+  const infowindowNode = document.createElement("span");
+  infowindowNode.innerHTML = "<div id=\"place\"><p>" + location.name + "</p><small>" + location.description + "</small></div>";
+  
+  // Create button to filter images by location.name
+  const filterButton = document.createElement("button");
+  filterButton.innerText = "Filter images";
+  filterButton.id = "filter-button";
+  filterButton.addEventListener("click", () => {
+    console.log("Filter button clicked");
+    filter(location.name);
+  });
+
+  infowindowNode.append(filterButton);
+  return infowindowNode;    
+}
+
+// Displays images stored in filter_pics.html at parameter location
+function filter(location) {
+  console.log("filtering: " + location);
+  $("#images").load("filter_pics.html #" + location);
+}
+
+// Append the "mapscript" element to "head"
+document.head.appendChild(mapscript);
