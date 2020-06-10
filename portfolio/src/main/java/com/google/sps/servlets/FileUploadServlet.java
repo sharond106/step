@@ -78,18 +78,13 @@ public class FileUploadServlet extends HttpServlet {
     String imageUrl = getUploadedFileUrl(request, "image");
     long timestamp = System.currentTimeMillis();
 
-    // Output HTML for now
-    PrintWriter out = response.getWriter();
-    out.println("<a href=\"" + imageUrl + "\">");
-    out.println("<img src=\"" + imageUrl + "\" />");
-    out.println("</a>");
-    out.println(message);
-
+    // Do not post if no file was selected
     if (imageUrl == null) {
       response.sendRedirect("/upload.jsp");
       return;
     }
 
+    // Create Entity to store in datastore
     Entity fileEntity = new Entity("File");
     fileEntity.setProperty("url", imageUrl);
     fileEntity.setProperty("caption", message);
