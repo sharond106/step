@@ -257,7 +257,7 @@ function showFiles() {
     files.forEach((file) => { 
       const listElement = document.createElement("li");
 
-      // Display image, which always needs to be rotated 90 degrees for the correct orientation
+      // Display image
       const imgElement = document.createElement("img");
       imgElement.src = file.url;
 
