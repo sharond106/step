@@ -40,6 +40,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList; 
 
 /** Servlet responsible for processing request with URL from Blobstore. */
@@ -73,13 +76,15 @@ public class FileUploadServlet extends HttpServlet {
   }
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     String message = request.getParameter("message");
     String imageUrl = getUploadedFileUrl(request, "image");
     long timestamp = System.currentTimeMillis();
 
+    HttpSession session = request.getSession();
     // Do not post if no file was selected
     if (imageUrl == null) {
+      session.setAttribute("error", "Please select a file to upload.");
       response.sendRedirect("/upload.jsp");
       return;
     }
@@ -92,7 +97,7 @@ public class FileUploadServlet extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(fileEntity);
-
+    session.setAttribute("error", "");
     response.sendRedirect("/upload.jsp");
   }
 

@@ -447,3 +447,7 @@ label {
 #uploads li span {
   margin: 40px;
 }
+
+#error {
+  color: darkred;
+}
