@@ -1,3 +1,5 @@
+// JSON object for map style
+// Documentation: https://developers.google.com/maps/documentation/javascript/style-reference
 var style = [
   {
     "elementType": "geometry",
