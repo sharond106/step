@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/** Javascript functions for scrolling and showing image modal */
+
 // Scroll to the top of the document
 function topFunction() {
   document.documentElement.scrollTop = 0;
