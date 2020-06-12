@@ -70,6 +70,7 @@ function addMapButtonEvent(mapButton, img) {
     markers.forEach(function (locationMarker) {
       if (locationMarker[0] === img.name) {
         locationMarker[1].infowindow.open(globalMap, locationMarker[1]);
+        window.location.href = "#map";
         closeModal();
         return;
       } else { 
