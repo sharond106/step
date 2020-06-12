@@ -60,7 +60,7 @@ public class FileUploadServlet extends HttpServlet {
     for (Entity entity : results.asIterable()) {
       long id = entity.getKey().getId();
       // Set url to BlobServeServlet
-      String url = "/serve?blobkey=" + (String) entity.getProperty("url");
+      String url = "/serve?blobkey=" + (String) entity.getProperty("blobkey");
       String caption = (String) entity.getProperty("caption");
       long timestamp = (long) entity.getProperty("timestamp");
 
@@ -79,12 +79,12 @@ public class FileUploadServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     String message = request.getParameter("message");
-    String imageUrl = getUploadedFileUrl(request, "image", response);
+    String blobkey = getUploadedFileUrl(request, "image", response);
     long timestamp = System.currentTimeMillis();
 
     HttpSession session = request.getSession();
     // Do not post if no file was selected
-    if (imageUrl == null) {
+    if (blobkey == null) {
       session.setAttribute("error", "Please select a file to upload.");
       response.sendRedirect("/upload.jsp");
       return;
@@ -92,7 +92,7 @@ public class FileUploadServlet extends HttpServlet {
 
     // Create Entity to store in datastore
     Entity fileEntity = new Entity("File");
-    fileEntity.setProperty("url", imageUrl);
+    fileEntity.setProperty("blobkey", blobkey);
     fileEntity.setProperty("caption", message);
     fileEntity.setProperty("timestamp", timestamp);
 
