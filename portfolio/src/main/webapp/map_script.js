@@ -20,6 +20,9 @@ mapscript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAy6bZSEG3FN2V
 mapscript.defer = true;
 mapscript.async = true;
 
+// Global variable that stores map (used in script.js)
+var globalMap;
+
 // Attach callback function to display map to the `window` object
 window.initMap = function () {
   // Default map is centered at the middle of the Atlantic Ocean and zoomed to display the US and half of Europe
@@ -34,6 +37,7 @@ window.initMap = function () {
     zoom: defaultZoom,
     styles: style   // style object loaded from map_style.js
   });
+  globalMap = map;
   // Get location data from server
   showLocations(map);
 };
@@ -47,7 +51,7 @@ function showLocations(map) {
   });
 }
 
-// Array of all markers on the map
+// Array of all [location.name, marker] pairs on the map
 var markers = [];
 
 // Create marker icon for location parameter on map
@@ -68,13 +72,14 @@ function createMarker(map, location) {
   });
   
   // Add marker to markers array
-  markers.push(marker);
+  const locationMarker = [location.name, marker];
+  markers.push(locationMarker);
 
   // Create a bounce animation for 2 seconds, and show info window when marker is clicked on
   marker.addListener("click", function () {
     // Close all other markers
-    markers.forEach(function (marker) {
-      marker.infowindow.close();
+    markers.forEach(function (locationMarker) {
+      locationMarker[1].infowindow.close();
     });
     
     marker.setAnimation(google.maps.Animation.BOUNCE);
