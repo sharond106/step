@@ -451,3 +451,7 @@ label {
 #error {
   color: darkred;
 }
+
+#uploadImage {
+  width: 30%;
+}

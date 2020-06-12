@@ -24,15 +24,18 @@ function showFiles() {
       const listElement = document.createElement("li");
 
       // Display image
+      const imgContainer = document.createElement("div");
+      imgContainer.id = "uploadImage";
       const imgElement = document.createElement("img");
       imgElement.src = file.url;
+      imgContainer.appendChild(imgElement);
 
       // Display caption and date
       const textElement = document.createElement("span");
       const date = new Date(file.timestamp);
-      textElement.innerHTML = "<b>" + file.caption + "</b><small>    " + date.toLocaleString() + "</small><br><br>";
+      textElement.innerHTML = "<b><b>" + file.caption + "</b><small>    " + date.toLocaleString() + "</small><br><br>";
 
-      listElement.appendChild(imgElement);
+      listElement.appendChild(imgContainer);
       listElement.appendChild(textElement);
       list.append(listElement);
     });

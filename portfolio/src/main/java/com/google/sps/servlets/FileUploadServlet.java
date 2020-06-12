@@ -58,8 +58,9 @@ public class FileUploadServlet extends HttpServlet {
     // Add all file uploads to ArrayList
     ArrayList<File> files = new ArrayList<File>();
     for (Entity entity : results.asIterable()) {
-      long id = entity.getKey().getId();  
-      String url = (String) entity.getProperty("url");
+      long id = entity.getKey().getId();
+      // Set url to BlobServeServlet
+      String url = "/serve?blobkey=" + (String) entity.getProperty("url");
       String caption = (String) entity.getProperty("caption");
       long timestamp = (long) entity.getProperty("timestamp");
 
@@ -78,7 +79,7 @@ public class FileUploadServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     String message = request.getParameter("message");
-    String imageUrl = getUploadedFileUrl(request, "image");
+    String imageUrl = getUploadedFileUrl(request, "image", response);
     long timestamp = System.currentTimeMillis();
 
     HttpSession session = request.getSession();
@@ -102,7 +103,7 @@ public class FileUploadServlet extends HttpServlet {
   }
 
   // Returns a URL that points to the uploaded file, or null if the user didn't upload a file
-  private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
+  private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName, HttpServletResponse response) {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
     List<BlobKey> blobKeys = blobs.get("image");
@@ -114,18 +115,7 @@ public class FileUploadServlet extends HttpServlet {
 
     // Form only contains a single file input
     BlobKey blobKey = blobKeys.get(0);
-
-    // Use ImagesService to get a URL that points to the uploaded file.
-    ImagesService imagesService = ImagesServiceFactory.getImagesService();
-    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
-
-    // To support running in Google Cloud Shell with AppEngine's devserver, the relative
-    // path to the image must be used, rather than the path returned by imagesService which contains a host.
-    try {
-      URL url = new URL(imagesService.getServingUrl(options));
-      return url.getPath();
-    } catch (MalformedURLException e) {
-      return imagesService.getServingUrl(options);
-    }
+    System.out.println(blobKey.getKeyString());
+    return blobKey.getKeyString(); 
   }
 }
