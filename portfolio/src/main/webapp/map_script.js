@@ -47,13 +47,11 @@ function showLocations(map) {
   });
 }
 
+// Array of all markers on the map
+var markers = [];
+
 // Create marker icon for location parameter on map
 function createMarker(map, location) {
-  const infowindowNode = createInfowindowNode(location);
-  var infowindow = new google.maps.InfoWindow({
-    content: infowindowNode
-  });
-
   // Create marker at the location's latitude and longitude
   var marker = new google.maps.Marker({
     position: {
@@ -62,11 +60,25 @@ function createMarker(map, location) {
     },
     map: map
   });
+  
+  // Create infowindow for marker
+  const infowindowNode = createInfowindowNode(location);
+  marker.infowindow = new google.maps.InfoWindow({
+    content: infowindowNode
+  });
+  
+  // Add marker to markers array
+  markers.push(marker);
 
   // Create a bounce animation for 2 seconds, and show info window when marker is clicked on
   marker.addListener("click", function () {
+    // Close all other markers
+    markers.forEach(function (marker) {
+      marker.infowindow.close();
+    });
+    
     marker.setAnimation(google.maps.Animation.BOUNCE);
-    infowindow.open(map, marker);
+    marker.infowindow.open(map, marker);
     var animationDuration = 2000; // in milliseconds
     window.setTimeout(function () {
       marker.setAnimation(null)
