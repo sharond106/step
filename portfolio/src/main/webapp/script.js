@@ -46,6 +46,7 @@ function showModal(img) {
   } 
   // Else set event listener
   else {
+    mapButton.style.display = "block";
     addMapButtonEvent(mapButton, img);
   }
 
