@@ -14,10 +14,80 @@
 
 package com.google.sps;
 
+import com.google.sps.TimeRange;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+
+    // If request duration is longer than a day
+    if (request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
+      return Arrays.asList();
+    }
+
+    // If no one is attending
+    if (events.size() == 0) {
+      return Arrays.asList(TimeRange.WHOLE_DAY);
+    }
+
+    // Find events including requested attendees and add those time ranges to "busyTimes"
+    List<TimeRange> busyTimes = new ArrayList<TimeRange>();
+    for (Event event: events) {
+      Set<String> attendees = event.getAttendees();
+
+      // Check if "event" includes a requested attendee
+      for (String requestedAttendee : request.getAttendees()) {
+        if (attendees.contains(requestedAttendee)) {
+          busyTimes.add(event.getWhen());
+          break;
+        }
+      }
+    }
+    if (busyTimes.size() == 0) {
+      return Arrays.asList(TimeRange.WHOLE_DAY);
+    }
+    Collections.sort(busyTimes, TimeRange.ORDER_BY_START);
+
+    // Create new list of times with no overlapping times
+    List<TimeRange> busyTimesFinal = new ArrayList<TimeRange>();
+    TimeRange thisTime = busyTimes.get(0);
+    TimeRange nextTime;
+    for (int i = 1; i < busyTimes.size(); i++) {
+      nextTime = busyTimes.get(i);
+
+      // If the times overlap, create new merged TimeRange and set "thisTime" to it
+      if (thisTime.overlaps(nextTime)) {
+        int endTime = Math.max(thisTime.end(), nextTime.end());
+        thisTime = TimeRange.fromStartEnd(thisTime.start(), endTime, false);
+      } 
+      else {
+        busyTimesFinal.add(thisTime);
+        thisTime = nextTime;
+      }
+    }
+    // Need to add the last time range (or if there is only 1 time range, the above for loop will be skipped)
+    busyTimesFinal.add(thisTime);
+
+    // Add the open time slots between the busy time slots (that are >= "request.duration") to "openTimes"
+    List<TimeRange> openTimes = new ArrayList<TimeRange>();
+    int start = TimeRange.START_OF_DAY;
+    for (TimeRange time : busyTimesFinal) {
+      if (time.start() - start >= request.getDuration()) {
+        openTimes.add(TimeRange.fromStartEnd(start, time.start(), false));
+      }
+      start = time.end();
+    }
+    // Check the slot between the last busy time and the end of day
+    if (TimeRange.END_OF_DAY - start >= request.getDuration()) {
+      openTimes.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
+    }
+
+    return openTimes;
   }
 }
