@@ -111,44 +111,10 @@ public final class FindMeetingQuery {
     return openTimes;
   }
   
-  
-  /********************* Below here is not really ready for review ***************************/
-
-  // TODO: Finish/ cleanup this method
+  // TODO: Finish this method
   // Find overlapped open times that fit "duration" between mandatory and optional attendees
   private List<TimeRange> getOverlappedTimes(List<TimeRange> mandatory, List<TimeRange> optional, long duration) {
-    List<TimeRange> finalTimes = new ArrayList<TimeRange>();
-    int mandIndex = 0;
-    int optIndex = 0;
-    TimeRange mandTime = mandatory.get(mandIndex);
-    TimeRange optTime = optional.get(optIndex);
-    
-    // Find overlaps between mandatory and optional times (pairs next to each other chronologically by start time)
-    while (mandIndex < mandatory.size() && optIndex < optional.size()) {
-      TimeRange overlapTime;
-      if (mandTime.start() <= optTime.start()) {
-        overlapTime = findOverlap(mandTime, optTime, duration);
-      } else {
-        overlapTime = findOverlap(optTime, mandTime, duration); 
-      }
-      if (overlapTime != null) {
-        finalTimes.add(overlapTime);
-      }
 
-      // Move on to next open time
-      // We can only change one in case we skip an overlap
-      // Example: |++++|   |++++|
-      //             |--------|      |----|
-      if (mandIndex + 1 < mandatory.size() && optIndex + 1 < optional.size()) {
-        if (mandatory.get(mandIndex + 1).start() < optional.get(optIndex + 1).start())) {
-          mandIndex++;
-        } else {
-          optIndex++;
-        }
-      } else {
-
-      }
-    }
     return mandatory;
   }
 
