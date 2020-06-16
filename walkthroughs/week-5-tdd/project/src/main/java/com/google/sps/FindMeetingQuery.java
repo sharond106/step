@@ -36,14 +36,42 @@ public final class FindMeetingQuery {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
 
-    List<TimeRange> mandatoryBusyTimes = getBusyTimes(events, request.getAttendees());
-    List<TimeRange> mandatoryOpenTimes = getOpenTimes(mandatoryBusyTimes, request.getDuration());
+    List<TimeRange> mandatoryBusyTimes = new ArrayList<TimeRange>();
+    List<TimeRange> optionalBusyTimes = new ArrayList<TimeRange>();
+    List<TimeRange> busyTimes = new ArrayList<TimeRange>();
     
-    List<TimeRange> optionalBusyTimes = getBusyTimes(events, request.getOptionalAttendees());
-    List<TimeRange> optionalOpenTimes = getOpenTimes(optionalBusyTimes, request.getDuration());
+    // Get mandatory attendees' busy times
+    if (request.getAttendees().size() > 0) {
+      mandatoryBusyTimes = getBusyTimes(events, request.getAttendees());
+      busyTimes.addAll(mandatoryBusyTimes);
+    }
 
-    //return getOverlappedTimes(mandatoryOpenTimes, optionalOpenTimes, request.getDuration());
-    return mandatoryOpenTimes;
+    // Get optional attendees' busy times
+    if (request.getOptionalAttendees().size() > 0) {
+      optionalBusyTimes = getBusyTimes(events, request.getOptionalAttendees());
+      busyTimes.addAll(optionalBusyTimes);
+    }
+    
+    // If there are busy times, find the open times that can fit the meeting duration
+    if (busyTimes.size() > 0) {
+      Collections.sort(busyTimes, TimeRange.ORDER_BY_START);
+      busyTimes = mergeOverlappedTimes(busyTimes);
+      List<TimeRange> openTimes = getOpenTimes(busyTimes, request.getDuration());
+      
+      // If there are no open times with the optional + mandatory, find open times for only the mandatory 
+      if (openTimes.size() > 0) {
+        return openTimes;
+      }
+      if (request.getAttendees().size() > 0) {
+        Collections.sort(mandatoryBusyTimes, TimeRange.ORDER_BY_START);
+        return getOpenTimes(mandatoryBusyTimes, request.getDuration());
+      }
+      // If there are no open times with the optional + mandatory and no mandatory attendees for the event,
+      return Arrays.asList();
+    }
+
+    // Return the whole day if there are no busy times
+    return Arrays.asList(TimeRange.WHOLE_DAY);
   }
 
   // Returns a list of busy times for "requestedAttendees", given other "events"
@@ -62,23 +90,24 @@ public final class FindMeetingQuery {
         }
       }
     }
-    if (busyTimes.size() == 0) {
-      return Arrays.asList(TimeRange.WHOLE_DAY);
-    }
-    Collections.sort(busyTimes, TimeRange.ORDER_BY_START);
+    return busyTimes;
+  }
+  
+  // Return a new list of "busyTimes" with no overlapping time ranges
+  private List<TimeRange> mergeOverlappedTimes(List<TimeRange> busyTimes) {
 
-    // Create new list of times with no overlapping times
     List<TimeRange> busyTimesFinal = new ArrayList<TimeRange>();
     TimeRange thisTime = busyTimes.get(0);
     TimeRange nextTime;
     for (int i = 1; i < busyTimes.size(); i++) {
       nextTime = busyTimes.get(i);
 
-      // If the times overlap, create a new TimeRange that merges them and set "thisTime" to it
+      // If the "thisTime" and "nextTime" overlap, create a new TimeRange that merges them and set "thisTime" to it
       if (thisTime.overlaps(nextTime)) {
         int endTime = Math.max(thisTime.end(), nextTime.end());
         thisTime = TimeRange.fromStartEnd(thisTime.start(), endTime, false);
       } 
+      // If they don't overlap, add "thisTime" to the final list and move on to next pair
       else {
         busyTimesFinal.add(thisTime);
         thisTime = nextTime;
@@ -86,7 +115,6 @@ public final class FindMeetingQuery {
     }
     // Need to add the last time range (or if there is only 1 time range, the above for loop will be skipped)
     busyTimesFinal.add(thisTime);
-
     return busyTimesFinal;
   }
 
@@ -109,35 +137,5 @@ public final class FindMeetingQuery {
       openTimes.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
     }
     return openTimes;
-  }
-  
-  // TODO: Finish this method
-  // Find overlapped open times that fit "duration" between mandatory and optional attendees
-  private List<TimeRange> getOverlappedTimes(List<TimeRange> mandatory, List<TimeRange> optional, long duration) {
-
-    return mandatory;
-  }
-
-  // Returns a TimeRange >= "duration" that overlaps 2 time ranges
-  private TimeRange findOverlap(TimeRange time1, TimeRange time2, long duration) {
-    // Case 1: |+++| |---|
-    if (time1.end() <= time2.start()) {
-      return null;
-    }
-    // Case 2: |+++|
-    //            |---|
-    else if (time1.end() > time2.start() && time1.end() <= time2.end()) {
-      int overlap = time1.end() - time2.start();
-      if (overlap >= duration) {
-        return TimeRange.fromStartEnd(time2.start(), time1.end());
-      }
-    }
-    // Case 3: |+++++++++|
-    //            |---|
-    else {
-      if (time2.duration() >= duration) {
-        return time2;
-      }
-    }
   }
 }
