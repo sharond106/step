@@ -52,26 +52,26 @@ public final class FindMeetingQuery {
       busyTimes.addAll(optionalBusyTimes);
     }
     
-    // If there are busy times, find the open times that can fit the meeting duration
-    if (busyTimes.size() > 0) {
-      Collections.sort(busyTimes, TimeRange.ORDER_BY_START);
-      busyTimes = mergeOverlappedTimes(busyTimes);
-      List<TimeRange> openTimes = getOpenTimes(busyTimes, request.getDuration());
-      
-      // If there are no open times with the optional + mandatory, find open times for only the mandatory 
-      if (openTimes.size() > 0) {
-        return openTimes;
-      }
-      if (request.getAttendees().size() > 0) {
-        Collections.sort(mandatoryBusyTimes, TimeRange.ORDER_BY_START);
-        return getOpenTimes(mandatoryBusyTimes, request.getDuration());
-      }
-      // If there are no open times with the optional + mandatory and no mandatory attendees for the event,
-      return Arrays.asList();
+    // Return the whole day if there are no busy times
+    if (busyTimes.size() == 0) {
+      return Arrays.asList(TimeRange.WHOLE_DAY);
     }
 
-    // Return the whole day if there are no busy times
-    return Arrays.asList(TimeRange.WHOLE_DAY);
+    // If there are busy times, find the open times that can fit the meeting duration
+    Collections.sort(busyTimes, TimeRange.ORDER_BY_START);
+    busyTimes = mergeOverlappedTimes(busyTimes);
+    List<TimeRange> openTimes = getOpenTimes(busyTimes, request.getDuration());
+    
+    // If there are no open times with the optional + mandatory, find open times for only the mandatory 
+    if (openTimes.size() > 0) {
+      return openTimes;
+    }
+    if (request.getAttendees().size() > 0) {
+      Collections.sort(mandatoryBusyTimes, TimeRange.ORDER_BY_START);
+      return getOpenTimes(mandatoryBusyTimes, request.getDuration());
+    }
+    // If there are no open times with the optional + mandatory and no mandatory attendees for the event,
+    return Arrays.asList();
   }
 
   // Returns a list of busy times for "requestedAttendees", given other "events"
@@ -96,6 +96,9 @@ public final class FindMeetingQuery {
   // Return a new list of "busyTimes" with no overlapping time ranges
   private List<TimeRange> mergeOverlappedTimes(List<TimeRange> busyTimes) {
 
+    if (busyTimes.size() == 0) {
+      return new ArrayList<TimeRange>();
+    }
     List<TimeRange> busyTimesFinal = new ArrayList<TimeRange>();
     TimeRange thisTime = busyTimes.get(0);
     TimeRange nextTime;
