@@ -340,6 +340,16 @@ th {
   padding: 5px 11px;
 }
 
+/* See on map button */
+#map-button-container {
+  margin: auto;
+  width: 60%;
+}
+
+#go-to-map {
+  padding: 5px 11px;
+}
+
 /* Close button */
 .close {
   color: #f1f1f1;

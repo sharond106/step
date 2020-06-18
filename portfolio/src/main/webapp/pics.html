@@ -26,12 +26,17 @@
       <h1>My moments.</h1>
       <br><br>
       <div id="map"></div>
+      <br>
       <button id="all" onclick="filter(this.id)">Show all images</button>
     </div>
     <br><br>
     <!-- The Modal -->
     <div id="my-modal" class="modal">
       <span class="close" onclick="closeModal()">&times;</span>
+      <div id="map-button-container">
+        <button id="go-to-map">See on map</button>
+        <br><br>
+      </div>
       <img alt="Image modal" class="modal-content" id="modal-img">
       <br><br>
       <div for="to-comments" id="caption"></div>

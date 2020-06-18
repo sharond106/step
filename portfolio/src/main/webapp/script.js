@@ -36,8 +36,20 @@ function scrollFunction() {
 // When the user clicks a photo, show image in modal
 function showModal(img) {
   const modal = document.getElementById("my-modal");
+  const mapButton = document.getElementById("go-to-map");
   const modalImg = document.getElementById("modal-img");
   const modalCaption = document.getElementById("caption");
+  
+  // If img does not have a location, don't display "See on map" button
+  if (!img.name) {
+    mapButton.style.display = "none";
+  } 
+  // Else set event listener
+  else {
+    mapButton.style.display = "block";
+    addMapButtonEvent(mapButton, img);
+  }
+
   modal.style.display = "block";
   modalImg.src = img.src;
   modalCaption.innerHTML = img.alt + "  " +
@@ -52,3 +64,19 @@ function closeModal() {
   maxElement.value = "";
 }
 
+// Add event listener for mapButton on img
+function addMapButtonEvent(mapButton, img) {
+  mapButton.addEventListener("click", () => {
+    // Search for correct marker by location in markers array (declared in map_script.js) and show infowindow
+    markers.forEach(function (locationMarker) {
+      if (locationMarker[0] === img.name) {
+        locationMarker[1].infowindow.open(globalMap, locationMarker[1]);
+        window.location.href = "#map";
+        closeModal();
+        return;
+      } else { 
+        locationMarker[1].infowindow.close();
+      }
+    });
+  });
+}
